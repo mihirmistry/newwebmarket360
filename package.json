@@ -4,6 +4,7 @@
   "private": true,
   "description": "Market360X website and Nifty market sentiment alerts (TypeScript, Node.js, PostgreSQL)",
   "type": "module",
+  "main": "server.js",
   "engines": {
     "node": ">=20.11"
   },
@@ -17,7 +18,7 @@
     "migrate:prod": "node dist/db/migrate.js",
     "create-admin": "tsx src/scripts/create-admin.ts",
     "create-admin:prod": "node dist/scripts/create-admin.js",
-    "db:local": "tsx src/scripts/local-db.ts",
+    "db:local": "tsx scripts/local-db.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.client.json --noEmit",
     "test": "node --import tsx --test --test-concurrency=1 tests/*.test.ts"
   },
