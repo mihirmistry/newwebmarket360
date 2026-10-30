@@ -4,8 +4,19 @@ import pg from "pg";
 pg.types.setTypeParser(pg.types.builtins.NUMERIC, (value: string) => Number.parseFloat(value));
 
 export function createPool(connectionString: string, ssl: boolean): pg.Pool {
+  let cleanUrl = connectionString;
+  try {
+    const u = new URL(connectionString);
+    if (ssl && u.searchParams.has("sslmode")) {
+      u.searchParams.delete("sslmode");
+      cleanUrl = u.toString();
+    }
+  } catch {
+    // keep raw connection string if URL parsing fails
+  }
+
   return new pg.Pool({
-    connectionString,
+    connectionString: cleanUrl,
     ssl: ssl ? { rejectUnauthorized: false } : undefined,
     max: 10,
     idleTimeoutMillis: 30_000,
