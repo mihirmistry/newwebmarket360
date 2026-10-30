@@ -39,13 +39,15 @@ export async function runMigrations(pool: pg.Pool, log: (msg: string) => void = 
 
 // CLI: `npm run migrate`
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
-  const { loadConfig } = await import("../config.js");
-  const { createPool } = await import("./pool.js");
-  const config = loadConfig();
-  const pool = createPool(config.DATABASE_URL, config.DATABASE_SSL);
-  try {
-    await runMigrations(pool);
-  } finally {
-    await pool.end();
-  }
+  void (async () => {
+    const { loadConfig } = await import("../config.js");
+    const { createPool } = await import("./pool.js");
+    const config = loadConfig();
+    const pool = createPool(config.DATABASE_URL, config.DATABASE_SSL);
+    try {
+      await runMigrations(pool);
+    } finally {
+      await pool.end();
+    }
+  })();
 }
