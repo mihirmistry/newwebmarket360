@@ -4,3 +4,4 @@ public/js/
 .env
 .local-pg/
 *.log
+*.zip
