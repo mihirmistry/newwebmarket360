@@ -1,0 +1,42 @@
+<%- include('_start') %>
+          <header class="m3x-acct-head">
+            <p class="m3x-eyebrow">Plan</p>
+            <h1 class="m3x-acct-title">Your plan</h1>
+            <p class="m3x-acct-lead">See your current plan and pick the one that suits how you trade.</p>
+          </header>
+
+          <section class="m3x-panel" aria-labelledby="m3x-current-title">
+            <h2 id="m3x-current-title"><%- icon('package') %>Current plan</h2>
+            <div class="m3x-empty">
+              <span class="m3x-empty-icon"><%- icon('bell-ring') %></span>
+              <div>
+                <p class="m3x-empty-title">You don't have an active plan yet</p>
+                <p class="m3x-empty-text">Choose a plan below to start getting Nifty option alerts. Once your plan is active, its validity and renewal date will show here.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="m3x-panel" aria-labelledby="m3x-plans-title">
+            <h2 id="m3x-plans-title"><%- icon('crown') %>Nifty Option Alert plans</h2>
+            <div class="m3x-plan-grid">
+              <% plans.forEach(function (p) { %>
+              <article class="m3x-plan<%= p.id === 'yearly' ? ' is-best' : '' %>">
+                <% if (p.id === 'yearly') { %><span class="m3x-plan-tag">Best value</span><% } %>
+                <h3><%= p.name %></h3>
+                <p class="m3x-plan-price"><%= formatInr(p.price) %><span>/<%= p.period %></span></p>
+                <ul>
+                  <li><%- icon('calendar-days') %>Valid for <%= p.validity %></li>
+                  <li><%- icon('indian-rupee') %>&asymp; <%= formatInr(p.comparison.perWeek) %> per week</li>
+                  <li class="<%= p.comparison.saving > 0 ? 'is-saving' : '' %>"><%- icon('badge-percent') %><%= p.comparison.saving > 0 ? 'Save ' + formatInr(p.comparison.saving) + ' (' + p.comparison.savingPercent + '%)' : 'Pay week by week' %></li>
+                </ul>
+                <a class="m3x-plan-btn" href="/checkout?plan=<%= p.id %>">Choose <%= p.name.toLowerCase() %><%- icon('arrow-right') %></a>
+              </article>
+              <% }) %>
+            </div>
+          </section>
+
+          <section class="m3x-panel" aria-labelledby="m3x-billing-title">
+            <h2 id="m3x-billing-title"><%- icon('receipt') %>Billing history</h2>
+            <p class="m3x-muted-row"><%- icon('info') %>No payments yet. Your receipts will appear here.</p>
+          </section>
+<%- include('_end') %>

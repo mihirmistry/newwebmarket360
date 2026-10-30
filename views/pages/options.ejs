@@ -1,0 +1,38 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+    <main class="trading-page options-page">
+  <section class="m3x-sec m3x-sec--hero trade-hero">
+    <div class="trade-wrap">
+      <div class="trade-center">
+        <span class="trade-label">Options trading</span>
+        <h1>Follow the flow.<br><span class="text-mint">Understand the trade.</span></h1>
+        <p class="trade-lead">Large options orders tell part of the story. Market360X brings flow, price action and sentiment together so you can see the context behind the activity.</p>
+        <div class="trade-actions"><a class="trade-button" href="/nifty-alert">Explore options plans<svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="m7 4 5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="trade-text-link" href="#options-basics">Understand options <span aria-hidden="true">→</span></a></div>
+      </div>
+      <div class="trade-panel trade-preview options-flow">
+        <div class="trade-panel-head"><span>Options flow overview</span><small>Illustrative data</small></div>
+        <div class="trade-table-wrap" role="region" aria-label="Options flow example; scroll horizontally for all columns" tabindex="0"><table><caption class="sr-only">Example options activity, not live market data</caption><thead><tr><th>Underlying</th><th>Activity</th><th>Premium</th><th>Order type</th><th>Context to review</th></tr></thead><tbody>
+          <tr><td>NIFTY<small>Nifty 50</small></td><td><span class="trade-tag">CALL</span></td><td>₹2.4 Cr</td><td>Fresh OI build-up</td><td>Price momentum</td></tr>
+          <tr><td>BANKNIFTY<small>Nifty Bank</small></td><td><span class="trade-tag">PUT</span></td><td>₹84 L</td><td>Large order</td><td>Position or hedge?</td></tr>
+          <tr><td>SENSEX<small>BSE Sensex</small></td><td><span class="trade-tag">CALL</span></td><td>₹1.1 Cr</td><td>Fresh OI build-up</td><td>Broader market direction</td></tr>
+        </tbody></table></div>
+        <div class="options-flow-bottom"><div><b>Activity</b><p class="trade-note">Where unusually large orders appear</p></div><div><b>Confirmation</b><p class="trade-note">How price and sentiment respond</p></div><div><b>Your decision</b><p class="trade-note">Whether the setup fits your plan</p></div></div>
+      </div>
+    </div>
+  </section>
+  <section class="m3x-sec trade-section" id="options-basics"><div class="trade-wrap trade-split">
+    <div class="trade-copy"><span class="trade-label">Understanding options</span><h2>A contract.<br>A price.<br><span class="text-mint">A defined expiry.</span></h2><p>An option gives its buyer the right, but not the obligation, to buy or sell an underlying asset at a specified strike price, subject to the contract’s terms and expiry.</p><p>Direction is only one part of the decision. Time remaining, volatility and the premium paid also affect an option’s value.</p></div>
+    <div class="trade-two"><article class="trade-panel options-contract"><strong>Call</strong><h3>The right to buy</h3><p>A call gives the buyer the right to buy at the strike price. Traders may use calls to express an upside view.</p></article><article class="trade-panel options-contract"><strong>Put</strong><h3>The right to sell</h3><p>A put gives the buyer the right to sell at the strike price. Puts can express a downside view or be part of a hedge.</p></article></div>
+  </div></section>
+  <section class="m3x-sec trade-section" id="how-it-works"><div class="trade-wrap">
+    <div class="trade-section-intro"><span class="trade-label">Why Market360X</span><h2>An unusual order needs <span class="text-mint">more than an alert.</span></h2><p>Options feeds can overwhelm you with transactions. We help connect notable activity to the market around it, so you have more to work with than a premium figure.</p></div>
+    <article class="options-lens"><span>01</span><h3>Find notable activity</h3><p>Follow large sweeps and blocks in one view instead of searching through separate feeds.</p></article>
+    <article class="options-lens"><span>02</span><h3>Read it alongside price</h3><p>Compare flow with price action and sentiment. A large call order alone does not establish a bullish position.</p></article>
+    <article class="options-lens"><span>03</span><h3>Evaluate the setup</h3><p>Review the alert and the market context behind it before deciding whether it fits your plan.</p></article>
+  </div></section>
+  <section class="m3x-sec trade-section"><div class="trade-wrap trade-split"><div><h2>Before you <span class="text-mint">follow the flow.</span></h2></div><div class="trade-faq"><details><summary>Does a large call order always mean a bullish trade?</summary><p>No. An order can be part of a hedge, a spread or a closing transaction. Flow is one input to evaluate alongside price, sentiment and your own analysis.</p></details><details><summary>Does Market360X execute options trades?</summary><p>Market360X provides market analysis and alerts. You choose the contract, review its risks and place any order through your broker.</p></details><details><summary>What risk should I understand first?</summary><p>An option buyer can lose the entire premium. Selling options can involve substantially greater risk, depending on the position. Understand the full contract and strategy before trading.</p></details></div></div></section>
+<%- include('../partials/cta-band', { ctaTitle: 'Put options activity in context.', ctaPrimary: { label: 'Explore pricing', href: '/nifty-alert' } }) %>
+</main>
+
+<%- include('../partials/footer') %>

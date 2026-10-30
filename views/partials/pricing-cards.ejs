@@ -1,0 +1,47 @@
+<%#
+  Nifty Option Alert plan cards (homepage #pricing and /nifty-alert). Prices come from src/site/plans.ts (locals.plans);
+  the per-week figure and saving compare each plan with paying the weekly price every week.
+  Each card: a tinted top panel (icon, name, tagline; solid black on the featured monthly plan), the price, the button, the features.
+%>
+<%
+  const base = plans.find(function (p) { return p.id === 'weekly'; }).price;
+  const inr = function (n) { return '₹' + Number(n).toLocaleString('en-IN'); };
+  const copy = {
+    weekly: { tagline: 'Try the alerts for a week', icon: 'calendar-days' },
+    monthly: { tagline: 'For regular Nifty traders', icon: 'calendar-range', featured: true },
+    yearly: { tagline: 'Lowest price per week', icon: 'crown', extra: 'Priority support' },
+  };
+  const features = ['Real-time Nifty option alerts', 'Signal direction and strength on every alert', 'PCR, OI and call/put flow analysis', 'Alerts on Telegram, WhatsApp and push', 'Daily pre-market Nifty brief'];
+%>
+<div class="m3x-price-grid">
+  <% plans.forEach(function (plan, i) {
+       const c = copy[plan.id] || { tagline: '', icon: 'calendar' };
+       const full = base * plan.weeks;
+       const saving = full - plan.price;
+       const pct = full > 0 ? Math.floor((saving / full) * 100) : 0;
+       const perWeek = Math.round(plan.price / plan.weeks);
+       const list = c.extra ? features.concat([c.extra]) : features;
+  %>
+  <article class="m3x-price-card<%= c.featured ? ' is-featured' : '' %>" data-opai-animate data-delay="<%= (0.3 + i * 0.1).toFixed(1) %>">
+    <% if (c.featured) { %><span class="m3x-price-ribbon">Recommended</span><% } %>
+    <div class="m3x-price-top">
+      <span class="m3x-price-ico" aria-hidden="true"><%- icon(c.icon) %></span>
+      <h3 class="m3x-price-name"><%= plan.name %></h3>
+      <p class="m3x-price-tagline"><%= c.tagline %></p>
+    </div>
+
+    <div class="m3x-price-amount">
+      <p class="m3x-price-value"><span class="m3x-price-cur">₹</span><%= plan.price.toLocaleString('en-IN') %><span class="m3x-price-per">/<%= plan.period %></span></p>
+      <p class="m3x-price-week"><%= plan.weeks === 1 ? inr(perWeek) + ' per week' : '≈ ' + inr(perWeek) + ' per week' %></p>
+      <p class="m3x-price-save"><% if (saving > 0) { %><s><%= inr(full) %></s> Save <%= inr(saving) %> (<%= pct %>%) vs weekly<% } else { %>Pay week by week<% } %></p>
+    </div>
+
+    <a href="/checkout?plan=<%= plan.id %>" data-plan="<%= plan.id %>" class="m3x-price-btn">Get <%= plan.name.toLowerCase() %><%- icon('arrow-right') %></a>
+
+    <ul class="m3x-price-features" aria-label="<%= plan.name %> plan includes">
+      <% list.forEach(function (f) { %><li><span class="m3x-price-check" aria-hidden="true"><%- icon('check') %></span><%= f %></li>
+      <% }) %>
+    </ul>
+  </article>
+  <% }) %>
+</div>

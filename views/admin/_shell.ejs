@@ -1,0 +1,62 @@
+<%#
+  Admin sidebar layout (opening part). Locals: title, adminPage ('dashboard' | 'alerts' | 'orders' | 'messages' | 'settings').
+  From the router (res.locals): admin, csrfToken, counts, sideCollapsed. Close with include('_shell-end').
+  The sidebar can be collapsed to icons on desktop (/js/admin-shell.js; remembered in the adm_side cookie).
+%>
+<%
+  const navLinks = [
+    { key: 'dashboard', href: '/admin', label: 'Dashboard', icon: 'layout-dashboard' },
+    { key: 'alerts', href: '/admin/nifty-alerts', label: 'Nifty alerts', icon: 'activity' },
+    { key: 'orders', href: '/admin/orders', label: 'Orders', icon: 'receipt-indian-rupee', badge: counts.ordersWaiting },
+    { key: 'messages', href: '/admin/messages', label: 'Messages', icon: 'inbox', badge: counts.messagesNew },
+    { key: 'settings', href: '/admin/settings', label: 'Settings', icon: 'settings' },
+  ];
+%>
+<%- include('_head', { title: title }) %>
+<body class="adm">
+<div class="adm-shell<%= typeof sideCollapsed !== 'undefined' && sideCollapsed ? ' is-collapsed' : '' %>" data-adm-shell>
+  <aside class="adm-side" id="adm-side" aria-label="Admin navigation" data-adm-side>
+    <div class="adm-side-brand">
+      <a href="/admin" class="adm-side-logo" aria-label="Market360X admin dashboard">
+        <img class="adm-logo-full" src="/images/logo/market360x-wordmark.png" alt="" width="681" height="166" />
+        <img class="adm-logo-mark" src="/favicon.svg" alt="" width="32" height="32" />
+      </a>
+      <button type="button" class="adm-icon-btn adm-side-collapse" data-adm-collapse aria-controls="adm-side" aria-expanded="<%= typeof sideCollapsed !== 'undefined' && sideCollapsed ? 'false' : 'true' %>" aria-label="<%= typeof sideCollapsed !== 'undefined' && sideCollapsed ? 'Expand sidebar' : 'Collapse sidebar' %>">
+        <span class="adm-ico-close"><%- icon('panel-left-close') %></span><span class="adm-ico-open"><%- icon('panel-left-open') %></span>
+      </button>
+      <button type="button" class="adm-icon-btn adm-side-close" data-adm-close aria-label="Close menu"><%- icon('x') %></button>
+    </div>
+
+    <nav class="adm-side-nav" aria-label="Admin pages">
+      <p class="adm-side-label">Manage</p>
+      <% navLinks.forEach(function (l) { %>
+      <a href="<%= l.href %>" data-tip="<%= l.label %>"<%- adminPage === l.key ? ' aria-current="page"' : '' %>>
+        <%- icon(l.icon) %><span><%= l.label %></span>
+        <% if (l.badge) { %><em class="adm-side-badge" aria-label="<%= l.badge %> waiting"><%= l.badge %></em><% } %>
+      </a>
+      <% }) %>
+    </nav>
+
+    <div class="adm-side-foot">
+      <a href="/" target="_blank" rel="noopener" class="adm-side-link" data-tip="View website"><%- icon('external-link') %><span>View website</span></a>
+      <div class="adm-side-user" data-tip="<%= admin.email %>">
+        <span class="adm-avatar" aria-hidden="true"><%= admin.email.charAt(0).toUpperCase() %></span>
+        <span class="adm-side-who">
+          <span class="adm-side-email" title="<%= admin.email %>"><%= admin.email %></span>
+          <span class="adm-side-tag">Admin</span>
+        </span>
+      </div>
+      <form method="post" action="/admin/logout">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <button type="submit" class="adm-side-link is-logout" data-tip="Log out"><%- icon('log-out') %><span>Log out</span></button>
+      </form>
+    </div>
+  </aside>
+  <div class="adm-backdrop" data-adm-close hidden></div>
+
+  <div class="adm-content">
+    <header class="adm-mobilebar">
+      <button type="button" class="adm-icon-btn" data-adm-menu aria-controls="adm-side" aria-expanded="false" aria-label="Open menu"><%- icon('menu') %></button>
+      <a href="/admin" class="adm-mobilebar-logo"><img src="/images/logo/market360x-wordmark.png" alt="Market360X admin" width="681" height="166" /></a>
+    </header>
+    <main class="adm-main">

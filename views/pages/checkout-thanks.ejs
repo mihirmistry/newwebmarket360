@@ -1,0 +1,24 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+    <main class="bg-background-6">
+      <section class="main-container m3x-checkout m3x-thanks" aria-labelledby="m3x-thanks-title">
+        <div class="m3x-co-card m3x-thanks-card">
+          <span class="m3x-thanks-icon"><%- icon('circle-check') %></span>
+          <h1 id="m3x-thanks-title" class="m3x-co-title">Thank you, <%= order.name.split(' ')[0] %>!</h1>
+          <p class="m3x-thanks-lead">
+            We've received your details for the <strong><%= order.planName %> plan (<%= formatInr(order.amount) %>)</strong>.
+            You will receive your login credentials at <strong><%= order.email %></strong> within 24 hours.
+          </p>
+          <dl class="m3x-co-details m3x-thanks-details">
+            <div><dt><%- icon('receipt') %>Order number</dt><dd>#<%= order.id %></dd></div>
+            <div><dt><%- icon('bell-ring') %>Plan</dt><dd>Nifty Option Alert &middot; <%= order.planName %></dd></div>
+            <div><dt><%- icon('indian-rupee') %>Amount</dt><dd><%= formatInr(order.amount) %></dd></div>
+            <div><dt><%- icon('mail') %>Credentials will be sent to</dt><dd><%= order.email %></dd></div>
+          </dl>
+          <p class="m3x-co-note"><%- icon('info') %><span>Can't find our email? Check your spam folder. Still nothing after 24 hours? <a href="/contact?topic=activate&amp;plan=<%= order.planId %>">Contact us</a> with order number #<%= order.id %>.</span></p>
+          <a class="m3x-btn" href="/"><%- icon('arrow-left') %>Back to the homepage</a>
+        </div>
+      </section>
+    </main>
+
+<%- include('../partials/footer') %>

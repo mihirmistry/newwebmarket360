@@ -1,0 +1,25 @@
+<%- include('_head', { title: 'Sign in' }) %>
+<body class="adm-auth">
+  <main class="adm-auth-card">
+    <a href="/" class="adm-auth-logo"><img src="/images/logo/market360x-wordmark.png" alt="Market360X" width="681" height="166" /></a>
+    <h1>Admin sign in</h1>
+    <p class="adm-muted">Manage the Nifty market sentiment alerts.</p>
+
+    <% if (error) { %><p class="adm-alert is-error" role="alert"><%= error %></p><% } %>
+
+    <form method="post" action="/admin/login" class="adm-form" novalidate>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+      <input type="hidden" name="next" value="<%= next %>" />
+      <label class="adm-field">
+        <span>Email</span>
+        <input type="email" name="email" value="<%= email %>" autocomplete="username" required autofocus />
+      </label>
+      <label class="adm-field">
+        <span>Password</span>
+        <input type="password" name="password" autocomplete="current-password" required />
+      </label>
+      <button type="submit" class="adm-btn is-primary is-block">Sign in</button>
+    </form>
+  </main>
+</body>
+</html>

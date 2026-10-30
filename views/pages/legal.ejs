@@ -1,0 +1,36 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+    <main class="bg-background-6">
+      <section class="main-container m3x-legal" aria-labelledby="m3x-legal-title">
+        <header class="m3x-legal-head">
+          <p class="m3x-eyebrow"><%- icon('scale') %>Legal</p>
+          <h1 id="m3x-legal-title" class="m3x-acct-title"><%= legal.heading %></h1>
+          <p class="m3x-acct-lead"><%= legal.summary %></p>
+          <ul class="m3x-legal-meta">
+            <li><%- icon('calendar-days') %>Last updated <%= legalUpdated %></li>
+          </ul>
+        </header>
+
+        <div class="m3x-legal-grid">
+          <aside class="m3x-legal-side">
+            <details class="m3x-legal-toc" open>
+              <summary><%- icon('list') %>On this page<%- icon('chevron-down', 'm3x-legal-caret') %></summary>
+              <ol>
+                <% legal.sections.forEach(function (s) { %><li><a href="#<%= s.id %>"><%= s.heading %></a></li>
+                <% }) %>
+              </ol>
+            </details>
+          </aside>
+
+          <article class="m3x-legal-body">
+            <% legal.sections.forEach(function (s, i) { %>
+            <section id="<%= s.id %>" class="m3x-legal-sec">
+              <h2><span class="m3x-legal-num"><%= String(i + 1).padStart(2, '0') %></span><%= s.heading %></h2>
+              <%- s.html %>
+            </section>
+            <% }) %>
+          </article>
+        </div>
+      </section>
+    </main>
+<%- include('../partials/footer') %>

@@ -1,0 +1,2 @@
+# Store text files with LF line endings (the site runs on Linux servers); git detects binaries (images, fonts) itself.
+* text=auto eol=lf

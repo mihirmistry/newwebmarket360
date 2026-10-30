@@ -1,0 +1,42 @@
+<%#
+  Homepage card: a simple NIFTY candle chart from a real Market360X Trading Terminal session (src/site/terminal-snapshot.ts),
+  with a dot on each candle where an alert fired (green below the candle, red above it when the alert pointed down).
+  Candles and dots animate in via /js/terminal-cards.js (.is-in).
+%>
+<%
+  const s = terminal;
+  const candles = s.candles;
+  const W = 1000, H = 400, PAD = 44;
+  const n = candles.length;
+  const hi = Math.max.apply(null, candles.map(function (c) { return c.h; }));
+  const lo = Math.min.apply(null, candles.map(function (c) { return c.l; }));
+  const y = function (v) { return PAD + (1 - (v - lo) / (hi - lo)) * (H - PAD * 2); };
+  const step = W / n, body = step * 0.5;
+  const x = function (i) { return step * i + step / 2; };
+  const pct = function (v, of) { return (v / of * 100).toFixed(2) + '%'; };
+  const toMin = function (t) { const p = t.split(':'); return +p[0] * 60 + +p[1]; };
+  const dots = [];
+  candles.forEach(function (c, i) {
+    const start = toMin(c.t);
+    const inCandle = s.alerts.filter(function (a) { const m = toMin(a.time); return m >= start && m < start + 15; });
+    if (inCandle.some(function (a) { return a.value >= 0; })) dots.push({ i: i, up: true, at: y(c.l) });
+    if (inCandle.some(function (a) { return a.value < 0; })) dots.push({ i: i, up: false, at: y(c.h) });
+  });
+  const last = candles[n - 1];
+  const fmt = function (v) { return Number(v).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
+%>
+<figure class="m3x-tchart" data-terminal-chart aria-label="Nifty chart with a dot on each candle where an alert fired">
+  <figcaption class="m3x-tchart-head"><span class="m3x-tchart-name">Nifty</span><span class="m3x-tchart-last"><%= fmt(last.c) %></span></figcaption>
+  <div class="m3x-tchart-plot">
+    <svg viewBox="0 0 <%= W %> <%= H %>" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <% candles.forEach(function (c, i) { const up = c.c >= c.o; const top = y(Math.max(c.o, c.c)), bot = y(Math.min(c.o, c.c)); %>
+      <g class="m3x-tchart-candle <%= up ? 'is-up' : 'is-down' %>" style="--i: <%= i %>">
+        <line x1="<%= x(i).toFixed(1) %>" x2="<%= x(i).toFixed(1) %>" y1="<%= y(c.h).toFixed(1) %>" y2="<%= y(c.l).toFixed(1) %>" />
+        <rect x="<%= (x(i) - body / 2).toFixed(1) %>" y="<%= top.toFixed(1) %>" width="<%= body.toFixed(1) %>" height="<%= Math.max(2, bot - top).toFixed(1) %>" />
+      </g>
+      <% }) %>
+    </svg>
+    <% dots.forEach(function (d) { %><span class="m3x-tchart-dot <%= d.up ? 'is-up' : 'is-down' %>" style="left: <%= pct(x(d.i), W) %>; top: <%= pct(d.at, H) %>; --i: <%= d.i %>"></span><% }) %>
+  </div>
+  <p class="m3x-tchart-legend"><span class="m3x-tchart-dot is-static" aria-hidden="true"></span>Alert</p>
+</figure>

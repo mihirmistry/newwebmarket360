@@ -1,0 +1,100 @@
+<%- include('_shell', { title: 'Dashboard', adminPage: 'dashboard' }) %>
+<% const tone = sentiment ? sentiment.label.toLowerCase() : 'neutral'; %>
+    <div class="adm-page-head">
+      <h1>Dashboard</h1>
+      <p class="adm-muted">A quick look at orders, messages and today's Nifty sentiment.</p>
+    </div>
+
+    <% if (flash) { %><p class="adm-alert is-<%= flash.type %>" role="status"><%= flash.message %></p><% } %>
+
+    <% if (!mail.configured) { %>
+    <div class="adm-alert is-info adm-callout">
+      <%- icon('mail-warning') %>
+      <div>
+        <strong>Email notifications are off.</strong>
+        <span><%= mail.passwordUnreadable ? 'Your saved SMTP password can no longer be read. Enter it again in Settings.' : 'Add your SMTP details so new orders and messages reach your inbox.' %></span>
+      </div>
+      <a class="adm-btn is-small" href="/admin/settings">Open Settings</a>
+    </div>
+    <% } %>
+
+    <section class="adm-kpis" aria-label="Key numbers">
+      <a class="adm-kpi<%= overview.ordersWaiting ? ' is-attention' : '' %>" href="/admin/orders">
+        <span class="adm-kpi-icon"><%- icon('clock') %></span>
+        <span class="adm-kpi-label">Orders waiting</span>
+        <strong><%= overview.ordersWaiting %></strong>
+        <span class="adm-kpi-foot"><%= overview.ordersWaiting ? 'Send login details within 24 hours' : 'All caught up' %></span>
+      </a>
+      <a class="adm-kpi" href="/admin/orders">
+        <span class="adm-kpi-icon"><%- icon('indian-rupee') %></span>
+        <span class="adm-kpi-label">Revenue (completed)</span>
+        <strong><%= formatInr(overview.revenueDone) %></strong>
+        <span class="adm-kpi-foot"><%= overview.ordersDone %> completed &middot; <%= overview.ordersLast7Days %> new this week</span>
+      </a>
+      <a class="adm-kpi<%= overview.messagesNew ? ' is-attention' : '' %>" href="/admin/messages">
+        <span class="adm-kpi-icon"><%- icon('inbox') %></span>
+        <span class="adm-kpi-label">New messages</span>
+        <strong><%= overview.messagesNew %></strong>
+        <span class="adm-kpi-foot"><%= overview.messagesTotal %> total from the Contact page</span>
+      </a>
+      <a class="adm-kpi is-<%= tone %>" href="/admin/nifty-alerts">
+        <span class="adm-kpi-icon"><%- icon('activity') %></span>
+        <span class="adm-kpi-label">Nifty sentiment</span>
+        <strong><%= sentiment ? formatPercent(sentiment.percent) : '—' %></strong>
+        <span class="adm-kpi-foot"><%= sentiment ? sentiment.label : 'Unavailable' %> &middot; edit alerts</span>
+      </a>
+    </section>
+
+    <div class="adm-grid-2">
+      <section class="adm-card" aria-labelledby="recent-orders">
+        <div class="adm-card-head">
+          <h2 id="recent-orders">Recent orders</h2>
+          <a class="adm-link" href="/admin/orders">View all <%- icon('arrow-right') %></a>
+        </div>
+        <% if (!overview.recentOrders.length) { %>
+        <p class="adm-empty">No orders yet.</p>
+        <% } else { %>
+        <ul class="adm-list">
+          <% overview.recentOrders.forEach(function (o) { %>
+          <li>
+            <span class="adm-list-main"><strong>#<%= o.id %> &middot; <%= o.name %></strong><small><%= o.planName %> plan &middot; <%= formatInr(o.amount) %> &middot; <%= fmtDateTime(o.createdAt) %></small></span>
+            <span class="adm-badge<%= o.status === 'done' ? ' is-done' : '' %>"><%= o.status === 'done' ? 'Done' : 'Waiting' %></span>
+          </li>
+          <% }) %>
+        </ul>
+        <% } %>
+      </section>
+
+      <section class="adm-card" aria-labelledby="recent-messages">
+        <div class="adm-card-head">
+          <h2 id="recent-messages">Recent messages</h2>
+          <a class="adm-link" href="/admin/messages">View all <%- icon('arrow-right') %></a>
+        </div>
+        <% if (!overview.recentMessages.length) { %>
+        <p class="adm-empty">No messages yet.</p>
+        <% } else { %>
+        <ul class="adm-list">
+          <% overview.recentMessages.forEach(function (m) { %>
+          <li>
+            <span class="adm-list-main"><strong><%= m.name %></strong><small><%= topicLabel(m.topic) %> &middot; <%= fmtDateTime(m.createdAt) %></small></span>
+            <span class="adm-badge<%= m.status === 'handled' ? ' is-done' : '' %>"><%= m.status === 'handled' ? 'Handled' : 'New' %></span>
+          </li>
+          <% }) %>
+        </ul>
+        <% } %>
+      </section>
+    </div>
+
+    <section class="adm-card" aria-labelledby="email-status">
+      <div class="adm-card-head">
+        <h2 id="email-status">Email notifications</h2>
+        <a class="adm-link" href="/admin/settings">Settings <%- icon('arrow-right') %></a>
+      </div>
+      <dl class="adm-order-grid">
+        <div><dt>Status</dt><dd><%= mail.configured ? 'On' : 'Off' %></dd></div>
+        <div><dt>Sent to</dt><dd><%= mail.recipients.length ? mail.recipients.join(', ') : 'Not set' %></dd></div>
+        <div><dt>New orders</dt><dd><%= mail.configured && mail.notifyOrders ? 'Emailed' : 'Not emailed' %></dd></div>
+        <div><dt>New messages</dt><dd><%= mail.configured && mail.notifyMessages ? 'Emailed' : 'Not emailed' %></dd></div>
+      </dl>
+    </section>
+<%- include('_shell-end') %>

@@ -1,0 +1,21 @@
+<%#
+  Homepage card: a simple feed of the alerts from a real Market360X Trading Terminal session (src/site/terminal-snapshot.ts).
+  The server shows the latest alerts; /js/terminal-cards.js replays the session, one alert sliding in at a time.
+%>
+<%
+  const s = terminal;
+  const label = { ENTRY: 'New alert', RE_ENTRY: 'Re-entry', REVERSAL: 'Reversal', EXIT: 'Exit' };
+  const latest = s.alerts.slice(-4).reverse();
+%>
+<div class="m3x-tlog" data-terminal-log aria-label="Alerts on <%= s.symbol %>, <%= s.date %>">
+  <div class="m3x-tlog-head">
+    <span class="m3x-tlog-name"><i aria-hidden="true"></i>Alerts</span>
+    <span class="m3x-tlog-meta">Nifty</span>
+  </div>
+  <ol class="m3x-tlog-list" data-tlog-list>
+    <% latest.forEach(function (a) { %>
+    <li class="m3x-tlog-row is-<%= a.kind.toLowerCase().replace('_', '-') %>"><span class="m3x-tlog-kind"><%= label[a.kind] %></span><span class="m3x-tlog-text">Nifty</span><span class="m3x-tlog-time"><%= a.time %></span></li>
+    <% }) %>
+  </ol>
+  <script type="application/json" data-tlog-data><%- JSON.stringify(s.alerts.map(function (a) { return { time: a.time, kind: a.kind }; })).replace(/</g, '\\u003c') %></script>
+</div>

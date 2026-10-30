@@ -1,0 +1,78 @@
+<%- include('_shell', { title: 'Nifty alerts', adminPage: 'alerts' }) %>
+
+    <div class="adm-page-head">
+      <h1>Nifty market sentiment alerts</h1>
+      <p class="adm-muted">
+        Each enabled alert adds its signal value to the overall Nifty 50 sentiment shown on the public dashboard.
+        Automatic alerts are calculated from Angel One market data: today's value is compared with the previous close and
+        scores +1 (moved the bullish way), &minus;1 (moved the bearish way) or 0 (changed less than its threshold).
+        Alerts entered by hand use the value you type.
+      </p>
+    </div>
+
+    <section class="adm-card adm-preview" aria-labelledby="adm-preview-title" data-preview>
+      <div class="adm-card-head">
+        <h2 id="adm-preview-title">Live preview</h2>
+        <span class="adm-badge" data-dirty-badge hidden>Unsaved changes</span>
+      </div>
+      <div class="adm-stats">
+        <div class="adm-stat is-bullish"><span>Bullish strength</span><strong data-pv="bullish">0</strong></div>
+        <div class="adm-stat is-bearish"><span>Bearish strength</span><strong data-pv="bearish">0</strong></div>
+        <div class="adm-stat"><span>Net strength</span><strong data-pv="net">0</strong></div>
+        <div class="adm-stat adm-stat-result is-neutral" data-pv-result><span>Sentiment</span><strong data-pv="percent">0%</strong><em data-pv="label">Neutral</em></div>
+      </div>
+      <div class="adm-scale" aria-hidden="true">
+        <div class="adm-scale-track"><span class="adm-scale-marker" data-pv-marker></span></div>
+        <div class="adm-scale-ticks"><span>&minus;100% Bearish</span><span>0%</span><span>Bullish +100%</span></div>
+      </div>
+      <p class="adm-muted adm-small">
+        Formula: (bullish strength &minus; bearish strength) &divide; (bullish strength + bearish strength) &times; 100.
+        Disabled alerts are excluded. The public dashboard only changes after you save.
+      </p>
+    </section>
+
+    <section class="adm-card" aria-labelledby="adm-alerts-title">
+      <div class="adm-card-head">
+        <h2 id="adm-alerts-title">Alerts</h2>
+        <p class="adm-legend">+2 strong bullish &middot; +1 bullish &middot; 0 neutral &middot; &minus;1 bearish &middot; &minus;2 strong bearish</p>
+      </div>
+
+      <div class="adm-auto-bar">
+        <% if (angelReady) { %>
+        <p class="adm-muted adm-small">Automatic alerts update every 15 minutes during market hours (9:15 AM to 3:35 PM IST) and once after the close.<% if (lastResult) { %> Last update: <%= lastResult.message %><% } %></p>
+        <button type="button" class="adm-btn" data-refresh><%- icon('refresh-cw') %>Refresh now</button>
+        <% } else { %>
+        <p class="adm-alert is-info">Automatic alerts need your Angel One SmartAPI details. Add them in <a href="/admin/settings#set-angel">Settings &rarr; Angel One</a>; until then they keep their last value.</p>
+        <% } %>
+      </div>
+
+      <noscript><p class="adm-alert is-error">JavaScript is required to edit alerts.</p></noscript>
+
+      <div class="adm-table-scroll">
+        <table class="adm-table adm-alerts-table">
+          <thead>
+            <tr>
+              <th scope="col" class="adm-col-num">#</th>
+              <th scope="col" class="adm-col-name">Alert name</th>
+              <th scope="col" class="adm-col-source">Source</th>
+              <th scope="col" class="adm-col-signal">Signal value</th>
+              <th scope="col" class="adm-col-dir">Direction</th>
+              <th scope="col" class="adm-col-on">Enabled</th>
+              <th scope="col" class="adm-col-del"><span class="adm-sr">Delete</span></th>
+            </tr>
+          </thead>
+          <tbody data-rows></tbody>
+        </table>
+      </div>
+
+      <div class="adm-actions">
+        <button type="button" class="adm-btn" data-add>+ Add Alert</button>
+        <span class="adm-actions-spacer"></span>
+        <button type="button" class="adm-btn is-ghost" data-reset disabled>Reset Changes</button>
+        <button type="button" class="adm-btn is-primary" data-save disabled>Save Changes</button>
+      </div>
+      <p class="adm-status" data-status role="status" aria-live="polite"></p>
+    </section>
+  <script type="application/json" id="adm-initial"><%- initialJson %></script>
+  <script type="application/json" id="adm-indicators"><%- indicatorsJson %></script>
+<%- include('_shell-end', { pageScripts: ['/js/admin.js'] }) %>

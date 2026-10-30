@@ -1,0 +1,91 @@
+<%#
+  Homepage "Markets" section: a price chart for the indices in the Options Alert menu (Nifty, Sensex, Bank Nifty,
+  Fin Nifty, Bankex, Midcap Nifty) with Today / 1W / 1M / 1Y ranges on the left, and the index picker on the right.
+  The picker shows today's price and change from the header strip's cached quotes (local: ticker); /js/index-chart.js
+  loads the chart from /api/market/history (Yahoo Finance, cached on the server) and keeps "Today" fresh.
+%>
+<%
+  const quotes = typeof ticker !== 'undefined' && ticker ? ticker.indices : [];
+  const quoteOf = function (id) { return quotes.find(function (q) { return q.id === id; }); };
+  const markets = [
+    { id: 'nifty', name: 'Nifty', full: 'Nifty 50', exchange: 'NSE', live: true },
+    { id: 'sensex', name: 'Sensex', full: 'BSE Sensex', exchange: 'BSE' },
+    { id: 'banknifty', name: 'Bank Nifty', full: 'Nifty Bank', exchange: 'NSE' },
+    { id: 'finnifty', name: 'Fin Nifty', full: 'Nifty Financial Services', exchange: 'NSE' },
+    { id: 'bankex', name: 'Bankex', full: 'BSE Bankex', exchange: 'BSE' },
+    { id: 'midcpnifty', name: 'Midcap Nifty', full: 'Nifty Midcap Select', exchange: 'NSE' },
+  ];
+  const first = quoteOf('nifty');
+  const ranges = [['1d', 'Today'], ['1w', '1W'], ['1m', '1M'], ['1y', '1Y']];
+%>
+<section id="markets" class="m3x-sec m3x-pt-0 bg-background-6" aria-labelledby="m3x-markets-title">
+  <div class="main-container">
+    <div class="m3x-sec-head mb-10 space-y-1.5 text-center lg:mb-14 lg:space-y-3">
+      <h2
+        id="m3x-markets-title"
+        data-opai-text-reveal
+        data-word-delay="0.1"
+        data-word-rotation-x="120"
+        data-word-offset-y="50"
+        class="xl:text-sora-heading-2 text-sora-heading-4 lg:text-sora-heading-3 font-normal text-white/90 xl:tracking-[-2.4px]"
+      >
+        Every index we cover. <span class="text-mint m3x-line">One live chart.</span>
+      </h2>
+      <p
+        data-opai-text-reveal
+        data-delay="0.2"
+        data-word-delay="0.01"
+        data-word-offset-y="42"
+        data-word-rotation-x="10"
+        class="text-tagline-2 font-inter-tight w-full font-normal text-white/60 lg:max-w-[510px]"
+      >
+        See how each market in our Options Alert range has moved today, this week, this month or this year.
+      </p>
+    </div>
+
+    <div class="m3x-ic" data-index-chart data-opai-animate data-delay="0.2">
+      <!-- chart -->
+      <div class="m3x-ic-main">
+        <div class="m3x-ic-head">
+          <div class="m3x-ic-title">
+            <p class="m3x-ic-name" data-ic-name>Nifty 50</p>
+            <p class="m3x-ic-meta"><span data-ic-exchange>NSE</span><i aria-hidden="true">&middot;</i><span data-ic-status>Live data</span></p>
+          </div>
+          <div class="m3x-ic-quote" aria-live="polite">
+            <strong class="m3x-ic-price" data-ic-price><%= first ? tickerFormat.price(first.price) : '—' %></strong>
+            <span class="m3x-ic-chg is-<%= first ? first.direction : 'flat' %>" data-ic-change><%= first ? tickerFormat.arrow(first.direction) + ' ' + tickerFormat.change(first.change, first.changePercent) : '' %></span>
+            <span class="m3x-ic-period" data-ic-period>Today</span>
+          </div>
+        </div>
+
+        <div class="m3x-ic-ranges" role="group" aria-label="Time range">
+          <% ranges.forEach(function (r, i) { %><button type="button" data-ic-range="<%= r[0] %>" aria-pressed="<%= i === 0 %>"><%= r[1] %></button><% }) %>
+        </div>
+
+        <div class="m3x-ic-plot is-loading" data-ic-plot tabindex="0" role="img" aria-label="Nifty 50 price chart, today">
+          <div class="m3x-ic-canvas" data-ic-canvas></div>
+          <p class="m3x-ic-msg" data-ic-msg>Loading chart&hellip;</p>
+        </div>
+        <p class="m3x-ic-note">Index data from Yahoo Finance; may be delayed. &ldquo;Today&rdquo; is measured from the previous close, other ranges from their first day.</p>
+      </div>
+
+      <!-- index picker -->
+      <div class="m3x-ic-side">
+        <p class="m3x-ic-side-title">Markets<span>Today</span></p>
+        <ul class="m3x-ic-list" aria-label="Choose a market">
+          <% markets.forEach(function (m, i) { const q = quoteOf(m.id); %>
+          <li>
+            <button type="button" class="m3x-ic-pick" data-ic-index="<%= m.id %>" data-ic-full="<%= m.full %>" data-ic-exchange="<%= m.exchange %>" aria-pressed="<%= i === 0 %>">
+              <span class="m3x-ic-pick-name"><%= m.name %><em class="<%= m.live ? 'is-live' : '' %>"><%= m.live ? 'Alerts live' : 'Alerts soon' %></em></span>
+              <span class="m3x-ic-pick-ex"><%= m.full %> &middot; <%= m.exchange %></span>
+              <span class="m3x-ic-pick-px" data-ic-pick-price><%= q ? tickerFormat.price(q.price) : '—' %></span>
+              <span class="m3x-ic-pick-chg is-<%= q ? q.direction : 'flat' %>" data-ic-pick-change><%= q ? tickerFormat.arrow(q.direction) + ' ' + (q.changePercent > 0 ? '+' : q.changePercent < 0 ? '−' : '') + Math.abs(q.changePercent).toFixed(2) + '%' : '' %></span>
+            </button>
+          </li>
+          <% }) %>
+        </ul>
+        <a href="/nifty-alert" class="m3x-ic-cta">Get Nifty option alerts<%- icon('arrow-right') %></a>
+      </div>
+    </div>
+  </div>
+</section>

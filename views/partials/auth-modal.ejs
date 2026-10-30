@@ -1,0 +1,81 @@
+<%# Log in / Sign up popup, opened by /js/auth.js when a visitor picks a plan. %>
+<script type="application/json" id="m3x-plans"><%- JSON.stringify(plans.map(function (p) { return { id: p.id, name: p.name, price: p.price, period: p.period }; })).replace(/</g, '\\u003c') %></script>
+
+<dialog class="m3x-auth" aria-labelledby="m3x-auth-title" data-auth-modal data-lenis-prevent>
+  <div class="m3x-auth-card">
+    <button type="button" class="m3x-auth-close" data-auth-close aria-label="Close">
+      <%- icon('x') %>
+    </button>
+
+    <span class="m3x-auth-badge"><%- icon('chart-candlestick') %></span>
+    <h2 id="m3x-auth-title" data-auth-title>Log in to continue</h2>
+    <p class="m3x-auth-sub" data-auth-sub>Log in to review your plan and checkout.</p>
+
+    <div class="m3x-auth-tabs" role="tablist" aria-label="Log in or sign up">
+      <button type="button" role="tab" id="m3x-tab-login" aria-controls="m3x-panel-login" aria-selected="true" data-auth-tab="login"><%- icon('log-in') %>Log in</button>
+      <button type="button" role="tab" id="m3x-tab-signup" aria-controls="m3x-panel-signup" aria-selected="false" tabindex="-1" data-auth-tab="signup"><%- icon('user-plus') %>Sign up</button>
+    </div>
+
+    <!-- log in -->
+    <form id="m3x-panel-login" class="m3x-auth-form" role="tabpanel" aria-labelledby="m3x-tab-login" data-auth-form="login" novalidate>
+      <label class="m3x-field">
+        <span>Email</span>
+        <span class="m3x-input"><%- icon('mail') %><input type="email" name="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required /></span>
+        <small class="m3x-field-error" data-error-for="email"></small>
+      </label>
+      <label class="m3x-field">
+        <span>Password</span>
+        <span class="m3x-input m3x-pass">
+          <%- icon('lock') %>
+          <input type="password" name="password" autocomplete="current-password" placeholder="Your password" required />
+          <button type="button" class="m3x-pass-toggle" data-pass-toggle aria-label="Show password" aria-pressed="false"><%- icon('eye', 'is-show') %><%- icon('eye-off', 'is-hide') %></button>
+        </span>
+        <small class="m3x-field-error" data-error-for="password"></small>
+      </label>
+      <p class="m3x-auth-error" role="alert" hidden><%- icon('circle-alert') %><span data-auth-error></span></p>
+      <button type="submit" class="m3x-auth-submit"><span data-submit-label>Log in</span><%- icon('arrow-right') %></button>
+      <p class="m3x-auth-switch">New to Market360X? <button type="button" data-auth-switch="signup">Create an account</button></p>
+    </form>
+
+    <!-- sign up -->
+    <form id="m3x-panel-signup" class="m3x-auth-form" role="tabpanel" aria-labelledby="m3x-tab-signup" data-auth-form="signup" novalidate hidden>
+      <label class="m3x-field">
+        <span>Full name</span>
+        <span class="m3x-input"><%- icon('user') %><input type="text" name="name" autocomplete="name" maxlength="80" placeholder="Your full name" required /></span>
+        <small class="m3x-field-error" data-error-for="name"></small>
+      </label>
+      <label class="m3x-field">
+        <span>Email</span>
+        <span class="m3x-input"><%- icon('mail') %><input type="email" name="email" autocomplete="email" inputmode="email" maxlength="254" placeholder="you@example.com" required /></span>
+        <small class="m3x-field-error" data-error-for="email"></small>
+      </label>
+      <div class="m3x-field-row">
+        <label class="m3x-field">
+          <span>Mobile number</span>
+          <span class="m3x-input"><%- icon('smartphone') %><input type="tel" name="phone" autocomplete="tel" inputmode="tel" placeholder="+91 98765 43210" maxlength="20" required /></span>
+          <small class="m3x-field-error" data-error-for="phone"></small>
+        </label>
+        <label class="m3x-field">
+          <span>Years in the market</span>
+          <span class="m3x-input"><%- icon('trending-up') %><input type="number" name="experienceYears" min="0" max="60" step="1" inputmode="numeric" placeholder="e.g. 3" required /></span>
+          <small class="m3x-field-error" data-error-for="experienceYears"></small>
+        </label>
+      </div>
+      <div class="m3x-field">
+        <label for="m3x-signup-password">Password</label>
+        <span class="m3x-input m3x-pass">
+          <%- icon('lock') %>
+          <input type="password" id="m3x-signup-password" name="password" autocomplete="new-password" placeholder="Create a strong password" required aria-describedby="m3x-signup-strength m3x-signup-rules" data-strength-input />
+          <button type="button" class="m3x-pass-toggle" data-pass-toggle aria-label="Show password" aria-pressed="false"><%- icon('eye', 'is-show') %><%- icon('eye-off', 'is-hide') %></button>
+        </span>
+        <%- include('password-strength', { idp: 'm3x-signup' }) %>
+        <small class="m3x-field-error" data-error-for="password"></small>
+      </div>
+      <p class="m3x-auth-error" role="alert" hidden><%- icon('circle-alert') %><span data-auth-error></span></p>
+      <button type="submit" class="m3x-auth-submit"><span data-submit-label>Create account</span><%- icon('arrow-right') %></button>
+      <p class="m3x-auth-switch">Already have an account? <button type="button" data-auth-switch="login">Log in</button></p>
+    </form>
+
+    <p class="m3x-auth-trust"><%- icon('shield-check') %>Your details stay private and are never shared.</p>
+  </div>
+</dialog>

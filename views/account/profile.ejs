@@ -1,0 +1,83 @@
+<%- include('_start') %>
+<%
+  const pe = profileErrors, pw = passwordErrors;
+  const invalid = function (errs, f) { return errs[f] ? ' aria-invalid="true"' : ''; };
+%>
+          <header class="m3x-acct-head">
+            <p class="m3x-eyebrow">Profile</p>
+            <h1 class="m3x-acct-title">Your details</h1>
+            <p class="m3x-acct-lead">Keep your contact details up to date so your alerts reach you.</p>
+          </header>
+
+          <section class="m3x-panel" aria-labelledby="m3x-details-title">
+            <h2 id="m3x-details-title"><%- icon('user-round-pen') %>Personal details</h2>
+            <form method="post" action="/account/profile" class="m3x-acct-form" novalidate>
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <label class="m3x-field">
+                <span>Full name</span>
+                <span class="m3x-input"><%- icon('user') %><input type="text" name="name" value="<%= profileValues.name %>" autocomplete="name" maxlength="80" required<%- invalid(pe, 'name') %> /></span>
+                <% if (pe.name) { %><small class="m3x-field-error"><%= pe.name %></small><% } %>
+              </label>
+              <label class="m3x-field">
+                <span>Email</span>
+                <span class="m3x-input"><%- icon('mail') %><input type="email" value="<%= customer.email %>" readonly aria-describedby="m3x-email-note" /></span>
+                <small class="m3x-field-hint" id="m3x-email-note">Your email is your login. To change it, <a href="/contact?topic=account">contact us</a>.</small>
+              </label>
+              <div class="m3x-field-row">
+                <label class="m3x-field">
+                  <span>Mobile number</span>
+                  <span class="m3x-input"><%- icon('smartphone') %><input type="tel" name="phone" value="<%= profileValues.phone %>" autocomplete="tel" inputmode="tel" maxlength="20" required<%- invalid(pe, 'phone') %> /></span>
+                  <% if (pe.phone) { %><small class="m3x-field-error"><%= pe.phone %></small><% } %>
+                </label>
+                <label class="m3x-field">
+                  <span>Years in the market</span>
+                  <span class="m3x-input"><%- icon('trending-up') %><input type="number" name="experienceYears" value="<%= profileValues.experienceYears %>" min="0" max="60" step="1" inputmode="numeric" required<%- invalid(pe, 'experienceYears') %> /></span>
+                  <% if (pe.experienceYears) { %><small class="m3x-field-error"><%= pe.experienceYears %></small><% } %>
+                </label>
+              </div>
+              <div class="m3x-form-actions">
+                <button type="submit" class="m3x-btn"><%- icon('check') %>Save changes</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="m3x-panel" id="password" aria-labelledby="m3x-password-title">
+            <h2 id="m3x-password-title"><%- icon('key-round') %>Change password</h2>
+            <form method="post" action="/account/password" class="m3x-acct-form" novalidate>
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <input type="text" name="username" value="<%= customer.email %>" autocomplete="username" hidden />
+              <div class="m3x-field">
+                <label for="m3x-current-password">Current password</label>
+                <span class="m3x-input m3x-pass">
+                  <%- icon('lock') %>
+                  <input type="password" id="m3x-current-password" name="currentPassword" autocomplete="current-password" required<%- invalid(pw, 'currentPassword') %> />
+                  <button type="button" class="m3x-pass-toggle" data-pass-toggle aria-label="Show password" aria-pressed="false"><%- icon('eye', 'is-show') %><%- icon('eye-off', 'is-hide') %></button>
+                </span>
+                <% if (pw.currentPassword) { %><small class="m3x-field-error"><%= pw.currentPassword %></small><% } %>
+              </div>
+              <div class="m3x-field">
+                <label for="m3x-new-password">New password</label>
+                <span class="m3x-input m3x-pass">
+                  <%- icon('lock') %>
+                  <input type="password" id="m3x-new-password" name="newPassword" autocomplete="new-password" placeholder="Create a strong password" required aria-describedby="m3x-newpw-strength m3x-newpw-rules" data-strength-input<%- invalid(pw, 'newPassword') %> />
+                  <button type="button" class="m3x-pass-toggle" data-pass-toggle aria-label="Show password" aria-pressed="false"><%- icon('eye', 'is-show') %><%- icon('eye-off', 'is-hide') %></button>
+                </span>
+                <%- include('../partials/password-strength', { idp: 'm3x-newpw' }) %>
+                <% if (pw.newPassword) { %><small class="m3x-field-error"><%= pw.newPassword %></small><% } %>
+              </div>
+              <div class="m3x-field">
+                <label for="m3x-confirm-password">Confirm new password</label>
+                <span class="m3x-input m3x-pass">
+                  <%- icon('lock') %>
+                  <input type="password" id="m3x-confirm-password" name="confirmPassword" autocomplete="new-password" required<%- invalid(pw, 'confirmPassword') %> />
+                  <button type="button" class="m3x-pass-toggle" data-pass-toggle aria-label="Show password" aria-pressed="false"><%- icon('eye', 'is-show') %><%- icon('eye-off', 'is-hide') %></button>
+                </span>
+                <% if (pw.confirmPassword) { %><small class="m3x-field-error"><%= pw.confirmPassword %></small><% } %>
+              </div>
+              <div class="m3x-form-actions">
+                <button type="submit" class="m3x-btn"><%- icon('key-round') %>Update password</button>
+                <span class="m3x-form-note"><%- icon('shield-check') %>Changing your password signs you out on other devices.</span>
+              </div>
+            </form>
+          </section>
+<%- include('_end') %>

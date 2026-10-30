@@ -1,0 +1,168 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<%
+  const invalid = function (f) { return errors[f] ? ' aria-invalid="true"' : ''; };
+  const errorFor = function (f) { return '<small class="m3x-field-error" id="m3x-err-' + f + '" data-error-for="' + f + '">' + (errors[f] ? escapeHtml(errors[f]) : '') + '</small>'; };
+  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  // On phones the form is split in two steps; reopen the step that has the error.
+  const detailErrors = ['name', 'email', 'phone', 'experienceYears'].some(function (f) { return errors[f]; });
+  const startStep = Object.keys(errors).length && !detailErrors ? 2 : 1;
+%>
+    <main class="bg-background-6">
+      <section class="main-container m3x-checkout" aria-labelledby="m3x-co-title">
+        <p class="m3x-eyebrow">Checkout</p>
+        <h1 id="m3x-co-title" class="m3x-co-title">Complete your order</h1>
+        <p class="m3x-co-lead">Enter your details and pay by UPI. We'll email your login within 24 hours.</p>
+
+        <% if (Object.keys(errors).length) { %>
+        <p class="m3x-flash is-error m3x-co-errors" role="alert"><%- icon('circle-alert') %>Please check the highlighted fields below.</p>
+        <% } %>
+
+        <form method="post" action="/checkout" class="m3x-co-grid" novalidate data-co-form data-co-start="<%= startStep %>" data-step="<%= startStep %>">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+          <input type="hidden" name="plan" value="<%= plan.id %>" />
+
+          <!-- phones only: where the visitor is in the two steps -->
+          <ol class="m3x-co-progress" aria-label="Checkout steps">
+            <li data-co-progress="1"<%- startStep === 2 ? ' class="is-done"' : ' aria-current="step"' %>><span>1</span>Your details</li>
+            <li data-co-progress="2"<%- startStep === 2 ? ' aria-current="step"' : '' %>><span>2</span>Pay &amp; confirm</li>
+          </ol>
+
+          <div class="m3x-co-col">
+            <!-- order summary -->
+            <section class="m3x-co-card m3x-co-summary" aria-labelledby="m3x-co-summary-title">
+              <h2 id="m3x-co-summary-title"><%- icon('receipt-indian-rupee') %>Order summary</h2>
+
+              <div class="m3x-co-plan">
+                <span class="m3x-co-plan-icon"><%- icon('chart-candlestick') %></span>
+                <div class="m3x-co-plan-text">
+                  <p class="m3x-co-product">Nifty Option Alert</p>
+                  <p class="m3x-co-plan-name"><%= plan.name %> plan</p>
+                  <p class="m3x-co-muted"><%- icon('calendar-days') %>Validity: <%= plan.validity %></p>
+                </div>
+                <p class="m3x-co-price"><%= formatInr(plan.price) %><span>/<%= plan.period %></span></p>
+              </div>
+
+              <nav class="m3x-co-switch" aria-label="Change plan">
+                <% plans.forEach(function (p) { %>
+                <a href="/checkout?plan=<%= p.id %>"<%- p.id === plan.id ? ' aria-current="page"' : '' %>><% if (p.id === plan.id) { %><%- icon('check') %><% } %><%= p.name %> &middot; <%= formatInr(p.price) %></a>
+                <% }) %>
+              </nav>
+
+              <dl class="m3x-co-lines">
+                <div><dt><%- icon('bell-ring') %><%= plan.name %> plan</dt><dd><%= formatInr(plan.price) %></dd></div>
+                <div><dt><%- icon('calendar-days') %>Works out to</dt><dd>&asymp; <%= formatInr(comparison.perWeek) %> per week</dd></div>
+                <% if (comparison.saving > 0) { %>
+                <div class="is-saving"><dt><%- icon('badge-percent') %>You save vs weekly (<%= formatInr(comparison.fullPrice) %>)</dt><dd><%= formatInr(comparison.saving) %> (<%= comparison.savingPercent %>%)</dd></div>
+                <% } %>
+              </dl>
+
+              <div class="m3x-co-total">
+                <span>Total to pay</span>
+                <strong data-total><%= formatInr(plan.price) %></strong>
+              </div>
+            </section>
+
+            <!-- phones, step 2: who is paying, with a way back to step 1 -->
+            <div class="m3x-co-recap">
+              <span class="m3x-co-recap-icon"><%- icon('user-round-check') %></span>
+              <p><strong data-co-recap-name><%= values.name %></strong><small data-co-recap-email><%= values.email %></small></p>
+              <button type="button" class="m3x-co-back" data-co-back><%- icon('pencil') %>Edit</button>
+            </div>
+
+            <!-- pay -->
+            <section class="m3x-co-card m3x-co-pay-card" aria-labelledby="m3x-co-pay-title">
+              <h2 id="m3x-co-pay-title" tabindex="-1"><span class="m3x-co-step">1</span>Scan and pay <%= formatInr(plan.price) %></h2>
+              <% if (payment.mode === 'none') { %>
+              <div class="m3x-empty">
+                <span class="m3x-empty-icon"><%- icon('qr-code') %></span>
+                <div>
+                  <p class="m3x-empty-title">UPI payment is being set up</p>
+                  <p class="m3x-empty-text">Please <a href="/contact?topic=activate&amp;plan=<%= plan.id %>">contact us</a> and we'll share the payment details for the <%= plan.name %> plan.</p>
+                </div>
+              </div>
+              <% } else { %>
+              <div class="m3x-qr-wrap">
+                <figure class="m3x-qr" aria-label="UPI QR code to pay <%= formatInr(plan.price) %> to <%= payment.payee %>">
+                  <% if (payment.mode === 'upi') { %><%- payment.qrSvg %><% } else { %><img src="<%= payment.qrImage %>" alt="UPI QR code for <%= payment.payee %>" width="220" height="220" fetchpriority="high" /><% } %>
+                </figure>
+                <div class="m3x-qr-info">
+                  <p class="m3x-qr-amount"><%= formatInr(plan.price) %></p>
+                  <p class="m3x-co-muted">Your UPI app will show the payee as <strong><%= payment.payee %></strong></p>
+                  <% if (payment.upiId) { %><p class="m3x-qr-upi"><%- icon('wallet') %>UPI ID: <strong><%= payment.upiId %></strong></p><% } %>
+                  <% if (payment.mode === 'image') { %>
+                  <p class="m3x-qr-enter"><%- icon('circle-alert') %><span>Enter exactly <strong><%= formatInr(plan.price) %></strong> when you pay.</span></p>
+                  <% } %>
+                  <ol class="m3x-qr-steps">
+                    <li>Open any UPI app (GPay, PhonePe, Paytm, BHIM).</li>
+                    <li>Scan this QR code<%= payment.mode === 'upi' ? '. The amount is filled in for you.' : ' and enter ' + formatInr(plan.price) + ' as the amount.' %></li>
+                    <li>Pay, then confirm your payment on this page.</li>
+                  </ol>
+                  <% if (payment.link) { %>
+                  <a class="m3x-qr-app" href="<%= payment.link %>"><%- icon('smartphone') %>Pay with a UPI app on this phone</a>
+                  <% } %>
+                </div>
+              </div>
+              <% } %>
+            </section>
+          </div>
+
+          <div class="m3x-co-col">
+            <section class="m3x-co-card m3x-co-form-card" aria-labelledby="m3x-co-form-title">
+              <!-- details (phones: step 1) -->
+              <div class="m3x-co-fields m3x-acct-form">
+                <h2 id="m3x-co-form-title" tabindex="-1"><span class="m3x-co-step">2</span>Your details</h2>
+                <p class="m3x-co-muted">We'll create your account and email your login details to this address.</p>
+                <label class="m3x-field">
+                  <span>Full name</span>
+                  <span class="m3x-input"><%- icon('user') %><input type="text" name="name" value="<%= values.name %>" autocomplete="name" maxlength="80" required aria-describedby="m3x-err-name"<%- invalid('name') %> /></span>
+                  <%- errorFor('name') %>
+                </label>
+                <label class="m3x-field">
+                  <span>Email</span>
+                  <span class="m3x-input"><%- icon('mail') %><input type="email" name="email" value="<%= values.email %>" autocomplete="email" inputmode="email" maxlength="254" placeholder="you@example.com" required aria-describedby="m3x-err-email"<%- invalid('email') %> /></span>
+                  <%- errorFor('email') %>
+                </label>
+                <div class="m3x-field-row">
+                  <label class="m3x-field">
+                    <span>Mobile number</span>
+                    <span class="m3x-input"><%- icon('smartphone') %><input type="tel" name="phone" value="<%= values.phone %>" autocomplete="tel" inputmode="tel" maxlength="20" placeholder="+91 98765 43210" required aria-describedby="m3x-err-phone"<%- invalid('phone') %> /></span>
+                    <%- errorFor('phone') %>
+                  </label>
+                  <label class="m3x-field">
+                    <span>Years in the market</span>
+                    <span class="m3x-input"><%- icon('trending-up') %><input type="number" name="experienceYears" value="<%= values.experienceYears %>" min="0" max="60" step="1" inputmode="numeric" placeholder="e.g. 3" required aria-describedby="m3x-err-experienceYears"<%- invalid('experienceYears') %> /></span>
+                    <%- errorFor('experienceYears') %>
+                  </label>
+                </div>
+                <div class="m3x-co-due">
+                  <span>Amount to pay<small>Nifty Option Alert &middot; <%= plan.name %> plan</small></span>
+                  <strong><%= formatInr(plan.price) %></strong>
+                </div>
+                <button type="button" class="m3x-btn m3x-co-next" data-co-next>Continue to payment<%- icon('arrow-right') %></button>
+              </div>
+
+              <!-- confirm (phones: step 2) -->
+              <div class="m3x-co-confirm m3x-acct-form">
+                <h2 class="m3x-co-confirm-title"><%- icon('badge-check') %>Confirm your payment</h2>
+                <label class="m3x-field">
+                  <span>UPI transaction ID (UTR) <em class="m3x-required" aria-hidden="true">*</em></span>
+                  <span class="m3x-input"><%- icon('hash') %><input type="text" name="paymentRef" value="<%= values.paymentRef %>" maxlength="40" autocomplete="off" placeholder="12-digit UTR / reference number" required<%- invalid('paymentRef') %> aria-describedby="m3x-ref-hint m3x-err-paymentRef" /></span>
+                  <small class="m3x-field-hint" id="m3x-ref-hint">Find it in your UPI app's payment receipt (also called UTR or reference number). We use it to confirm your payment.</small>
+                  <%- errorFor('paymentRef') %>
+                </label>
+                <label class="m3x-check<%= errors.paid ? ' is-invalid' : '' %>">
+                  <input type="checkbox" name="paid" value="yes"<%- values.paid ? ' checked' : '' %> required aria-describedby="m3x-err-paid"<%- invalid('paid') %> />
+                  <span>I have paid <strong><%= formatInr(plan.price) %></strong> for the <%= plan.name %> plan using the QR code.</span>
+                </label>
+                <%- errorFor('paid') %>
+                <button type="submit" class="m3x-btn m3x-co-submit"><%- icon('send') %>Submit details</button>
+                <p class="m3x-co-note"><%- icon('clock') %><span>You'll receive your login credentials by email within 24 hours of payment.</span></p>
+              </div>
+            </section>
+          </div>
+        </form>
+      </section>
+    </main>
+
+<%- include('../partials/footer') %>

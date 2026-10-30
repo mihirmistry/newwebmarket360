@@ -1,0 +1,100 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<% const invalid = function (f) { return errors[f] ? ' aria-invalid="true"' : ''; }; %>
+    <main class="bg-background-6">
+      <section class="main-container m3x-contact" aria-labelledby="m3x-contact-title">
+        <header class="m3x-contact-head">
+          <p class="m3x-eyebrow">Contact</p>
+          <h1 id="m3x-contact-title" class="m3x-acct-title">Talk to the Market360X team</h1>
+          <p class="m3x-acct-lead">Questions about our alerts, a plan or your account? Send us a message and we'll get back to you by email.</p>
+        </header>
+
+        <div class="m3x-contact-grid">
+          <aside class="m3x-contact-side" aria-label="Other ways to reach us">
+            <a class="m3x-contact-card" href="mailto:contact@market360x.com">
+              <span class="m3x-stat-icon"><%- icon('mail') %></span>
+              <span><strong>Email us</strong><small>contact@market360x.com</small></span>
+            </a>
+            <a class="m3x-contact-card" href="tel:+919211384013">
+              <span class="m3x-stat-icon"><%- icon('phone') %></span>
+              <span><strong>Call us</strong><small>+91 92113 84013</small></span>
+            </a>
+            <div class="m3x-contact-card">
+              <span class="m3x-stat-icon"><%- icon('map-pin') %></span>
+              <span><strong>Visit us</strong><small class="m3x-contact-address">423, Tower-B, Logix Techno Park, Sector-127, Noida, Delhi NCR - 201313</small></span>
+            </div>
+            <a class="m3x-contact-card" href="/nifty-alert">
+              <span class="m3x-stat-icon"><%- icon('bell-ring') %></span>
+              <span><strong>Plans and pricing</strong><small>Nifty Option Alert from ₹99 a week</small></span>
+            </a>
+            <% if (account) { %>
+            <a class="m3x-contact-card" href="/account">
+              <span class="m3x-stat-icon"><%- icon('layout-dashboard') %></span>
+              <span><strong>Your dashboard</strong><small>See your plan and update your details</small></span>
+            </a>
+            <% } else if (features.customerAccounts) { %>
+            <a class="m3x-contact-card" href="/account" data-auth-open>
+              <span class="m3x-stat-icon"><%- icon('circle-user-round') %></span>
+              <span><strong>Already a member?</strong><small>Log in to see your plan and details</small></span>
+            </a>
+            <% } %>
+            <p class="m3x-contact-note"><%- icon('shield-check') %>We only use your details to reply to your message.</p>
+          </aside>
+
+          <section class="m3x-panel" aria-labelledby="m3x-form-title">
+            <h2 id="m3x-form-title"><%- icon('message-square-text') %>Send us a message</h2>
+            <% if (flash) { %>
+            <p class="m3x-flash is-<%= flash.type %>" role="status"><%- icon('circle-check') %><%= flash.message %></p>
+            <% } %>
+            <form method="post" action="/contact" class="m3x-acct-form" novalidate>
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <div class="m3x-hp" aria-hidden="true">
+                <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+              </div>
+              <div class="m3x-field-row">
+                <label class="m3x-field">
+                  <span>Full name</span>
+                  <span class="m3x-input"><%- icon('user') %><input type="text" name="name" value="<%= values.name %>" autocomplete="name" maxlength="80" required<%- invalid('name') %> /></span>
+                  <% if (errors.name) { %><small class="m3x-field-error"><%= errors.name %></small><% } %>
+                </label>
+                <label class="m3x-field">
+                  <span>Email</span>
+                  <span class="m3x-input"><%- icon('mail') %><input type="email" name="email" value="<%= values.email %>" autocomplete="email" inputmode="email" maxlength="254" required<%- invalid('email') %> /></span>
+                  <% if (errors.email) { %><small class="m3x-field-error"><%= errors.email %></small><% } %>
+                </label>
+              </div>
+              <div class="m3x-field-row">
+                <label class="m3x-field">
+                  <span>Mobile number <em class="m3x-optional">(optional)</em></span>
+                  <span class="m3x-input"><%- icon('smartphone') %><input type="tel" name="phone" value="<%= values.phone %>" autocomplete="tel" inputmode="tel" maxlength="20" placeholder="+91 98765 43210"<%- invalid('phone') %> /></span>
+                  <% if (errors.phone) { %><small class="m3x-field-error"><%= errors.phone %></small><% } %>
+                </label>
+                <label class="m3x-field">
+                  <span>Topic</span>
+                  <span class="m3x-input m3x-select"><%- icon('tag') %>
+                    <select name="topic" required<%- invalid('topic') %>>
+                      <option value="" disabled<%- values.topic ? '' : ' selected' %>>Choose a topic</option>
+                      <% topics.forEach(function (t) { %>
+                      <option value="<%= t.id %>"<%- values.topic === t.id ? ' selected' : '' %>><%= t.label %></option>
+                      <% }) %>
+                    </select>
+                    <%- icon('chevron-down', 'm3x-select-caret') %>
+                  </span>
+                  <% if (errors.topic) { %><small class="m3x-field-error"><%= errors.topic %></small><% } %>
+                </label>
+              </div>
+              <label class="m3x-field">
+                <span>Message</span>
+                <textarea name="message" rows="6" maxlength="<%= messageMax %>" required placeholder="How can we help?"<%- invalid('message') %>><%= values.message %></textarea>
+                <% if (errors.message) { %><small class="m3x-field-error"><%= errors.message %></small><% } %>
+              </label>
+              <div class="m3x-form-actions">
+                <button type="submit" class="m3x-btn"><%- icon('send') %>Send message</button>
+              </div>
+            </form>
+          </section>
+        </div>
+      </section>
+    </main>
+
+<%- include('../partials/footer') %>

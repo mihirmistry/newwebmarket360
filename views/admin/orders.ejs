@@ -1,0 +1,61 @@
+<%- include('_shell', { title: 'Orders', adminPage: 'orders' }) %>
+<%
+  const fmtDate = function (d) {
+    return new Intl.DateTimeFormat('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Kolkata' }).format(d) + ' IST';
+  };
+  const pending = orders.filter(function (o) { return o.status === 'new'; }).length;
+  const experience = function (y) { return y === 0 ? 'Less than a year' : y + (y === 1 ? ' year' : ' years'); };
+%>
+    <div class="adm-page-head">
+      <h1>Orders</h1>
+      <p class="adm-muted">
+        Plans bought through the QR checkout. For each order: check the payment in your UPI app, create the customer's login,
+        email them the credentials (within 24 hours), then mark the order done.
+        <%= pending %> waiting &middot; <%= orders.length %> total<%= orders.length >= 200 ? ' (showing the latest 200)' : '' %>.
+      </p>
+      <% if (!emailEnabled) { %>
+      <p class="adm-alert is-info">New orders aren't emailed to you yet. <a href="/admin/settings">Set up email in Settings</a>. Orders always appear here.</p>
+      <% } %>
+    </div>
+
+    <% if (flash) { %><p class="adm-alert is-<%= flash.type %>" role="status"><%= flash.message %></p><% } %>
+
+    <% if (!orders.length) { %>
+    <section class="adm-card"><p class="adm-empty">No orders yet. When customers submit the checkout form, their orders appear here.</p></section>
+    <% } %>
+
+    <% orders.forEach(function (o) { %>
+    <article class="adm-card adm-msg<%= o.status === 'new' ? ' is-new' : '' %>" aria-labelledby="order-<%= o.id %>">
+      <div class="adm-msg-head">
+        <div>
+          <h2 id="order-<%= o.id %>">#<%= o.id %> &middot; <%= o.planName %> plan &middot; <%= formatInr(o.amount) %>
+            <% if (o.status === 'new') { %><span class="adm-badge">Waiting</span><% } else { %><span class="adm-badge is-done">Done</span><% } %>
+          </h2>
+          <p class="adm-muted adm-small">
+            Submitted <%= fmtDate(o.createdAt) %> &middot; <%= o.adminNotifiedAt ? 'Emailed to admin' : 'Not emailed' %>
+          </p>
+        </div>
+      </div>
+      <dl class="adm-order-grid">
+        <div><dt>Name</dt><dd><%= o.name %></dd></div>
+        <div><dt>Email</dt><dd><a href="mailto:<%= o.email %>"><%= o.email %></a></dd></div>
+        <div><dt>Mobile</dt><dd><a href="tel:<%= o.phone %>"><%= o.phone %></a></dd></div>
+        <div><dt>Experience</dt><dd><%= experience(o.experienceYears) %></dd></div>
+        <div><dt>UPI reference</dt><dd><%= o.paymentRef || 'Not given' %></dd></div>
+      </dl>
+      <div class="adm-actions">
+        <a class="adm-btn is-small" href="mailto:<%= o.email %>?subject=<%= encodeURIComponent('Your Market360X login details') %>">Email credentials</a>
+        <form method="post" action="/admin/orders/<%= o.id %>/status">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+          <input type="hidden" name="status" value="<%= o.status === 'new' ? 'done' : 'new' %>" />
+          <button type="submit" class="adm-btn is-ghost is-small"><%= o.status === 'new' ? 'Mark as done' : 'Move back to waiting' %></button>
+        </form>
+        <span class="adm-actions-spacer"></span>
+        <form method="post" action="/admin/orders/<%= o.id %>/delete" data-confirm="This deletes the order permanently. It can't be undone." data-confirm-title="Delete this order?" data-confirm-label="Delete order">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+          <button type="submit" class="adm-btn is-ghost is-small">Delete</button>
+        </form>
+      </div>
+    </article>
+    <% }) %>
+<%- include('_shell-end') %>

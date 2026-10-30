@@ -1,0 +1,20 @@
+<%#
+  Closing call-to-action band before the footer (homepage and the inner pages): the green line texture, the title on the
+  left and two buttons on the right. Optional locals: ctaTitle, ctaPrimary { label, href }, ctaSecondary { label, href }.
+%>
+<%
+  const title = typeof ctaTitle !== 'undefined' && ctaTitle ? ctaTitle : 'See the alerts What Millionaire sees';
+  const primary = typeof ctaPrimary !== 'undefined' && ctaPrimary ? ctaPrimary : { label: 'Try Now', href: '/nifty-alert' };
+  const secondary = typeof ctaSecondary !== 'undefined' && ctaSecondary ? ctaSecondary : { label: 'Explore Features', href: '/features' };
+%>
+<section class="m3x-sec m3x-pt-0 m3x-cta4" aria-labelledby="m3x-cta4-title">
+  <div class="main-container">
+    <div class="m3x-cta4-box" data-opai-animate data-delay="0.1">
+      <h2 id="m3x-cta4-title" class="m3x-cta4-title"><%= title %></h2>
+      <div class="m3x-cta4-actions">
+        <a href="<%= primary.href %>" class="m3x-cta4-btn is-primary"><%= primary.label %><%- icon('arrow-right') %></a>
+        <a href="<%= secondary.href %>" class="m3x-cta4-btn is-ghost"><%= secondary.label %></a>
+      </div>
+    </div>
+  </div>
+</section>

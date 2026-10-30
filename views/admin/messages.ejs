@@ -1,0 +1,48 @@
+<%- include('_shell', { title: 'Messages', adminPage: 'messages' }) %>
+<%
+  const fmtDate = function (d) {
+    return new Intl.DateTimeFormat('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Kolkata' }).format(d) + ' IST';
+  };
+  const newCount = messages.filter(function (m) { return m.status === 'new'; }).length;
+%>
+    <div class="adm-page-head">
+      <h1>Messages</h1>
+      <p class="adm-muted">Sent from the Contact page. <%= newCount %> new &middot; <%= messages.length %> total<%= messages.length >= 200 ? ' (showing the latest 200)' : '' %>.</p>
+      <% if (!emailEnabled) { %><p class="adm-alert is-info">New messages aren't emailed to you yet. <a href="/admin/settings">Set up email in Settings</a>.</p><% } %>
+    </div>
+
+    <% if (flash) { %><p class="adm-alert is-<%= flash.type %>" role="status"><%= flash.message %></p><% } %>
+
+    <% if (!messages.length) { %>
+    <section class="adm-card"><p class="adm-empty">No messages yet. When visitors use the Contact page, their messages appear here.</p></section>
+    <% } %>
+
+    <% messages.forEach(function (m) { %>
+    <article class="adm-card adm-msg<%= m.status === 'new' ? ' is-new' : '' %>" aria-labelledby="msg-<%= m.id %>">
+      <div class="adm-msg-head">
+        <div>
+          <h2 id="msg-<%= m.id %>"><%= m.name %> <% if (m.status === 'new') { %><span class="adm-badge">New</span><% } %></h2>
+          <p class="adm-muted adm-small">
+            <a href="mailto:<%= m.email %>"><%= m.email %></a><% if (m.phone) { %> &middot; <a href="tel:<%= m.phone %>"><%= m.phone %></a><% } %>
+            &middot; <%= topicLabel(m.topic) %><%= m.customerId ? ' · Customer #' + m.customerId : '' %>
+          </p>
+        </div>
+        <time class="adm-muted adm-small" datetime="<%= m.createdAt.toISOString() %>"><%= fmtDate(m.createdAt) %></time>
+      </div>
+      <p class="adm-msg-body"><%= m.message %></p>
+      <div class="adm-actions">
+        <a class="adm-btn is-small" href="mailto:<%= m.email %>?subject=<%= encodeURIComponent('Re: your message to Market360X') %>">Reply by email</a>
+        <form method="post" action="/admin/messages/<%= m.id %>/status">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+          <input type="hidden" name="status" value="<%= m.status === 'new' ? 'handled' : 'new' %>" />
+          <button type="submit" class="adm-btn is-ghost is-small"><%= m.status === 'new' ? 'Mark as handled' : 'Mark as new' %></button>
+        </form>
+        <span class="adm-actions-spacer"></span>
+        <form method="post" action="/admin/messages/<%= m.id %>/delete" data-confirm="This deletes the message permanently. It can't be undone." data-confirm-title="Delete this message?" data-confirm-label="Delete message">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+          <button type="submit" class="adm-btn is-ghost is-small">Delete</button>
+        </form>
+      </div>
+    </article>
+    <% }) %>
+<%- include('_shell-end') %>

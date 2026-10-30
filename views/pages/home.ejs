@@ -1,0 +1,1118 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+    <main class="bg-background-6">
+      <!-- ============================= Hero ============================= -->
+
+<section class="m3x-hero4" aria-labelledby="m3x-hero4-title">
+  <!-- full-bleed background video -->
+  <div class="m3x-hero4-bg" aria-hidden="true">
+    <video class="m3x-hero4-video" autoplay muted loop playsinline preload="metadata" poster="/videos/hero-trading-poster.webp">
+      <source src="/videos/hero-trading.mp4" type="video/mp4" />
+    </video>
+    <span class="m3x-hero4-shade"></span>
+  </div>
+  <div class="main-container m3x-hero4-inner">
+    <svg width="0" height="0" aria-hidden="true" focusable="false" style="position: absolute">
+      <filter id="m3x-outline4" x="-5%" y="-10%" width="110%" height="130%">
+        <feMorphology in="SourceGraphic" operator="dilate" radius="1.6" result="grown" />
+        <feComposite in="grown" in2="SourceGraphic" operator="out" />
+      </filter>
+    </svg>
+    <div class="m3x-hero4-copy">
+      <h1 id="m3x-hero4-title" class="m3x-hero4-title">
+        Alerts <br /><span class="m3x-hero4-outline">Backed By Data.</span>
+      </h1>
+      <div data-opai-animate data-delay="0.3" data-instant="true" class="m3x-hero4-cta">
+<%- include('../partials/hero-cta') -%>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="m3x-sec m3x-stats3" aria-label="Why Market360X">
+  <div class="main-container">
+    <ul class="m3x-stats3-grid">
+      <% [['zap', 'Real-time', 'Alerts every market session'], ['layers', '4 data checks', 'Price, OI, PCR and volume'], ['chart-candlestick', '5+', 'Markets covered'], ['send', 'Instant', 'Telegram &amp; WhatsApp delivery']].forEach(function (st, i) { %>
+      <li class="m3x-stats3-card" data-opai-animate data-delay="<%= (0.1 + i * 0.1).toFixed(1) %>">
+        <strong><%= st[1] %></strong>
+        <span><%- st[2] %></span>
+      </li>
+      <% }) %>
+    </ul>
+  </div>
+</section>
+<section id="m3x-after-hero" class="m3x-sec relative">
+  <div class="main-container">
+    <div class="relative" data-opai-animate data-delay="0.2">
+      <div class="m3x-sec-head m3x-dash-head">
+        <h2 class="m3x-dash-title text-sora-heading-4 lg:text-sora-heading-3 font-normal text-white/90">Market Direction of the Day</h2>
+      </div>
+      <%- include('../partials/sentiment-dashboard') %>
+    </div>
+  </div>
+</section>
+
+      <!-- ============================= Integration ============================= -->
+
+<section class="m3x-sec m3x-pt-0 bg-background-6 m3x-showcase" aria-labelledby="m3x-showcase-title" data-showcase style="--steps: 3">
+  <!-- The section title scrolls normally (centred, one line); after it the slides pin while scrolling (desktop): the
+       screenshot on the right changes with the scroll and the left shows its name (Dragger-Puller, Alert Engine,
+       Interactive Candlestick Chart), one at a time. /js/showcase.js picks the step; phones show a column. -->
+  <div class="main-container">
+    <h2
+      id="m3x-showcase-title"
+      class="m3x-sc-heading xl:text-sora-heading-2 text-sora-heading-4 lg:text-sora-heading-3 font-normal text-white/90 xl:tracking-[-2.4px]"
+    >
+      One alert service. <span class="text-mint">Every market you trade.</span>
+    </h2>
+  </div>
+  <div class="m3x-sc-track" data-showcase-track>
+    <div class="m3x-sc-sticky">
+      <div class="main-container m3x-sc-inner">
+        <div class="m3x-sc-grid">
+        <div class="m3x-sc-titles">
+          <p class="m3x-sc-title is-active" data-showcase-title aria-hidden="true">Dragger-Puller</p>
+          <p class="m3x-sc-title" data-showcase-title aria-hidden="true">Alert Engine</p>
+          <p class="m3x-sc-title" data-showcase-title aria-hidden="true">Interactive Candlestick Chart</p>
+        </div>
+
+        <div class="m3x-sc-stage" aria-label="Market360X dashboard screenshots">
+          <figure class="m3x-sc-shot is-active" data-showcase-slide>
+            <div class="m3x-sc-frame"><img loading="lazy" decoding="async" src="/images/banners/banner1.webp" alt="Dragger-Puller view showing Nifty 50 stocks pulling and dragging the index" width="1280" height="719" /></div>
+            <figcaption><span>Dragger-Puller</span><%- icon('arrow-right') %></figcaption>
+          </figure>
+          <figure class="m3x-sc-shot" data-showcase-slide>
+            <div class="m3x-sc-frame"><img src="/images/banners/banner2.webp" alt="Alert Engine history log with re-entry and reversal alerts" width="1280" height="674" decoding="async" loading="lazy" /></div>
+            <figcaption><span>Alert Engine</span><%- icon('arrow-right') %></figcaption>
+          </figure>
+          <figure class="m3x-sc-shot" data-showcase-slide>
+            <div class="m3x-sc-frame"><img src="/images/banners/banner3.webp" alt="Real-time Nifty 50 candlestick chart with alert annotations" width="1280" height="718" decoding="async" loading="lazy" /></div>
+            <figcaption><span>Interactive Candlestick Chart</span><%- icon('arrow-right') %></figcaption>
+          </figure>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+      <!-- ============================= Markets: index chart ============================= -->
+<%- include('../partials/index-chart') %>
+
+      <!-- ============================= Features ============================= -->
+
+<section id="features" class="m3x-sec {=$section-class} py-16 md:py-24 lg:py-28 xl:py-33 2xl:py-39">
+  <div class="main-container">
+    <div class="m3x-sec-head mb-13 space-y-1.5 text-center lg:mb-19 xl:space-y-3">
+      <h2
+        data-opai-text-reveal
+        data-word-delay="0.1"
+        data-word-rotation-x="120"
+        data-word-offset-y="50"
+        class="xl:text-sora-heading-2 lg:text-sora-heading-3 text-sora-heading-4 font-normal text-white/90 xl:tracking-[-2.4px]"
+      >
+        Everything behind every alert. <span class="text-mint m3x-line">Nothing left to guess.</span>
+      </h2>
+    </div>
+
+    <!-- features -->
+    <div
+      class="glowing-cards grid grid-cols-1 gap-x-8 max-md:space-y-8 md:grid-cols-2 lg:grid-cols-3"
+    >
+      <!-- column 01 -->
+      <article
+        data-opai-animate
+        data-delay="0.3"
+        class="glowing-card m3x-flow-card bg-background-5 rounded-lg p-7 lg:p-10.5"
+      >
+        <div
+          class="ease-team-ease-1 absolute top-[-3%] right-[-20%] z-0 size-37 bg-white mix-blend-plus-lighter blur-[25.5px]"
+        ></div>
+        <div
+          class="bg-opai-blue ease-team-ease-1 absolute top-[-4.5%] right-[-13%] z-0 size-34 blur-[42px]"
+        ></div>
+        <!-- the Alert Engine log from a real terminal session (replayed) -->
+        <div class="relative z-12"><%- include('../partials/terminal-alerts') %></div>
+
+        <div class="m3x-flow-copy relative z-12 space-y-1">
+          <h3 class="text-sora-heading-5 font-normal tracking-[-0.72px] text-white/80">
+            Alerts as they happen
+          </h3>
+          <p class="text-tagline-3 text-white/50">
+            Every alert appears the moment it fires, with the time, so you never miss a move.
+          </p>
+        </div>
+      </article>
+
+      <!-- column 02 -->
+      <div class="space-y-8">
+        <article
+          data-opai-animate
+          data-delay="0.4"
+          class="glowing-card bg-background-5 rounded-lg p-8 lg:p-10.5"
+        >
+          <div
+            class="ease-team-ease-1 absolute top-[-5%] left-[-25%] z-0 size-37 bg-white mix-blend-plus-lighter blur-[25.5px]"
+          ></div>
+          <div
+            class="bg-opai-blue ease-team-ease-1 absolute top-[-6.5%] left-[-17%] z-0 size-34 blur-[42px]"
+          ></div>
+
+          <!-- the terminal chart: NIFTY candles with the alerts marked on them (real session) -->
+          <div class="relative z-14"><%- include('../partials/terminal-chart') %></div>
+          <div class="relative z-20 space-y-1 pt-10 lg:pt-18">
+            <h3 class="text-sora-heading-5 font-normal tracking-[-0.72px] text-white/80">
+              Alerts on the chart
+            </h3>
+            <p class="text-tagline-3 text-white/50">
+              See each alert right on the Nifty chart, exactly where the move happened.
+            </p>
+          </div>
+        </article>
+      </div>
+
+      <!-- column 03 -->
+      <div class="space-y-8">
+        <article
+          data-opai-animate
+          data-delay="0.5"
+          class="glowing-card bg-background-5 space-y-9.5 rounded-lg p-8 lg:p-10.5"
+        >
+          <div class="relative z-30 space-y-6">
+            <div class="logos-marquee-container">
+              <div class="flex items-center justify-center gap-x-6">
+                <figure
+                  class="bg-background-4 ml-6 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/telegram.svg" alt="Telegram" class="size-10 object-contain" />
+                </figure>
+                <figure
+                  class="bg-background-4 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/whatsapp.svg" alt="WhatsApp" class="size-10 object-contain" />
+                </figure>
+                <figure
+                  class="bg-background-4 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/slack.svg" alt="Slack" class="size-10 object-contain" />
+                </figure>
+                <figure
+                  class="bg-background-4 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/x.svg" alt="X" class="size-10 object-contain" />
+                </figure>
+              </div>
+            </div>
+
+            <div class="logos-right-marquee-container">
+              <div class="flex items-center justify-center gap-x-6">
+                <figure
+                  class="bg-background-4 ml-6 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/x.svg" alt="X" class="size-10 object-contain" />
+                </figure>
+                <figure
+                  class="bg-background-4 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/reddit.svg" alt="Reddit" class="size-10 object-contain" />
+                </figure>
+                <figure
+                  class="bg-background-4 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/youtube.svg" alt="YouTube" class="size-10 object-contain" />
+                </figure>
+                <figure
+                  class="bg-background-4 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/telegram.svg" alt="Telegram" class="size-10 object-contain" />
+                </figure>
+                <figure
+                  class="bg-background-4 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/slack.svg" alt="Slack" class="size-10 object-contain" />
+                </figure>
+                <figure
+                  class="bg-background-4 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/whatsapp.svg" alt="WhatsApp" class="size-10 object-contain" />
+                </figure>
+              </div>
+            </div>
+
+            <div class="logos-marquee-container">
+              <div class="flex items-center justify-center gap-x-6">
+                <figure
+                  class="bg-background-4 ml-6 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/whatsapp.svg" alt="WhatsApp" class="size-10 object-contain" />
+                </figure>
+                <figure
+                  class="bg-background-4 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/telegram.svg" alt="Telegram" class="size-10 object-contain" />
+                </figure>
+                <figure
+                  class="bg-background-4 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/x.svg" alt="X" class="size-10 object-contain" />
+                </figure>
+                <figure
+                  class="bg-background-4 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/slack.svg" alt="Slack" class="size-10 object-contain" />
+                </figure>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative z-20 space-y-1">
+            <h3 class="text-sora-heading-5 font-normal tracking-[-0.72px] text-white/80">
+              Real-time Trade Alerts
+            </h3>
+            <p class="text-tagline-3 text-white/50">
+              Get alerts the moment a setup forms, on Telegram, WhatsApp, email or push
+              notifications, wherever you are.
+            </p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div
+      class="mx-auto mt-12 w-[85%] text-center md:mx-0 md:w-auto lg:mt-14"
+      data-opai-animate
+      data-delay="0.2"
+    >
+      <a href="/features" class="magnetic-button w-full md:w-auto inline-block">
+  <div class="group {=$class} relative z-10 w-full">
+    <div
+      class="{=$button-class} flex w-full cursor-pointer items-center justify-center gap-[7px] rounded-full bg-linear-[90deg,#DBE2E6_0%,#FFF_71.63%] px-6 py-[11px] md:py-[13px]"
+    >
+      <span
+        class="font-ibm-plex-mono text-tagline-2 text-background-6 inline-block leading-[1.4] font-medium"
+      >
+        Explore features
+      </span>
+      <span
+        class="inline-block transition-transform duration-500 ease-in-out group-hover:translate-x-1"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 18 18"
+          fill="none"
+        >
+          <path
+            d="M6.75 13.5L11.25 9L6.75 4.5"
+            stroke="#0D1017"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
+    </div>
+
+    <!-- Gradient Circle-->
+    <span
+      class="magnetic-button-gradient {=$gradient-class} pointer-events-none absolute top-1/2 right-0 z-[-1] h-[56px] w-22 -translate-y-1/2 rounded-full bg-linear-[270deg,#5A9FFF_0%,rgba(255,250,107,0.20)_95.12%] blur-md transition-colors duration-500 ease-in-out content-['']"
+    >
+    </span>
+    <!-- Gradient Circle-2-->
+    <span
+      class="magnetic-button-gradient {=$gradient-class} pointer-events-none absolute top-1/2 right-2 z-[-1] h-[60px] w-[82px] -translate-y-1/2 rounded-full bg-linear-[270deg,#5A9FFF_0%,rgba(255,250,107,0.20)_95.12%] blur-[7px] transition-colors duration-500 ease-in-out content-['']"
+    >
+    </span>
+  </div>
+</a>
+
+    </div>
+  </div>
+</section>
+
+  <!-- ============================= How signals work ============================= -->
+<section id="how-it-works" class="m3x-sec m3x-pt-0 bg-background-6 pt-20 pb-16 md:pt-27 md:pb-20 lg:pt-33 lg:pb-26 xl:pt-39 xl:pb-28">
+  <div class="main-container">
+    <div class="m3x-stack">
+      <div class="m3x-stack-intro">
+        <h2
+          data-opai-text-reveal
+          data-word-delay="0.1"
+          data-word-rotation-x="120"
+          data-word-offset-y="50"
+          class="xl:text-sora-heading-2 lg:text-sora-heading-3 text-sora-heading-4 font-normal tracking-[-2.4px] text-white/90"
+        >
+          We don't guess. <span class="text-mint m3x-line">We read the data.</span>
+        </h2>
+        <p class="m3x-stack-lead">
+          Every alert is built from market data, not tips or hunches. A trade is only flagged when
+          price, open interest and volume point the same way.
+        </p>
+        <div data-opai-animate data-delay="0.2" class="m3x-stack-cta">
+          <a href="#pricing" class="magnetic-button w-full md:w-auto inline-block">
+  <div class="group {=$class} relative z-10 w-full">
+    <div
+      class="{=$button-class} flex w-full cursor-pointer items-center justify-center gap-[7px] rounded-full bg-linear-[90deg,#DBE2E6_0%,#FFF_71.63%] px-6 py-[11px] md:py-[13px]"
+    >
+      <span
+        class="font-ibm-plex-mono text-tagline-2 text-background-6 inline-block leading-[1.4] font-medium"
+      >
+        Try our platform
+      </span>
+      <span
+        class="inline-block transition-transform duration-500 ease-in-out group-hover:translate-x-1"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 18 18"
+          fill="none"
+        >
+          <path
+            d="M6.75 13.5L11.25 9L6.75 4.5"
+            stroke="#0D1017"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
+    </div>
+
+    <!-- Gradient Circle-->
+    <span
+      class="magnetic-button-gradient {=$gradient-class} pointer-events-none absolute top-1/2 right-0 z-[-1] h-[56px] w-22 -translate-y-1/2 rounded-full bg-linear-[270deg,#5A9FFF_0%,rgba(255,250,107,0.20)_95.12%] blur-md transition-colors duration-500 ease-in-out content-['']"
+    >
+    </span>
+    <!-- Gradient Circle-2-->
+    <span
+      class="magnetic-button-gradient {=$gradient-class} pointer-events-none absolute top-1/2 right-2 z-[-1] h-[60px] w-[82px] -translate-y-1/2 rounded-full bg-linear-[270deg,#5A9FFF_0%,rgba(255,250,107,0.20)_95.12%] blur-[7px] transition-colors duration-500 ease-in-out content-['']"
+    >
+    </span>
+  </div>
+</a>
+        </div>
+      </div>
+
+      <!-- four data sources: cards stack on each other while scrolling (/js/stack.js scales the ones underneath) -->
+      <ol class="m3x-stack-list" data-stack-cards aria-label="What every alert is built from">
+        <li class="m3x-stack-item" style="--i: 0">
+          <article class="m3x-stack-card">
+            <div class="m3x-stack-top">
+              <span class="ns-shape-1 m3x-stack-ico" aria-hidden="true"></span>
+              <span class="m3x-stack-num">01<small>/04</small></span>
+            </div>
+            <div class="m3x-stack-body">
+              <h3 class="m3x-stack-title">Price &amp; volume action.</h3>
+              <p class="m3x-stack-text">Breakouts, trend strength, support and resistance, and volume spikes.</p>
+            </div>
+          </article>
+        </li>
+        <li class="m3x-stack-item" style="--i: 1">
+          <article class="m3x-stack-card is-invert">
+            <img loading="lazy" decoding="async" class="m3x-stack-glow" src="/images/gradient/opai-10-green.webp" alt="" aria-hidden="true" />
+            <div class="m3x-stack-top">
+              <span class="ns-shape-2 m3x-stack-ico" aria-hidden="true"></span>
+              <span class="m3x-stack-num">02<small>/04</small></span>
+            </div>
+            <div class="m3x-stack-body">
+              <h3 class="m3x-stack-title">Open interest &amp; PCR.</h3>
+              <p class="m3x-stack-text">Call and put OI build-up, PCR shifts and key option chain levels.</p>
+            </div>
+          </article>
+        </li>
+        <li class="m3x-stack-item" style="--i: 2">
+          <article class="m3x-stack-card">
+            <div class="m3x-stack-top">
+              <span class="ns-shape-3 m3x-stack-ico" aria-hidden="true"></span>
+              <span class="m3x-stack-num">03<small>/04</small></span>
+            </div>
+            <div class="m3x-stack-body">
+              <h3 class="m3x-stack-title">News &amp; events.</h3>
+              <p class="m3x-stack-text">Company results, RBI policy and Indian economic data that move the market.</p>
+            </div>
+          </article>
+        </li>
+        <li class="m3x-stack-item" style="--i: 3">
+          <article class="m3x-stack-card">
+            <div class="m3x-stack-top">
+              <span class="ns-shape-4 m3x-stack-ico" aria-hidden="true"></span>
+              <span class="m3x-stack-num">04<small>/04</small></span>
+            </div>
+            <div class="m3x-stack-body">
+              <h3 class="m3x-stack-title">Market breadth.</h3>
+              <p class="m3x-stack-text">Advances and declines, sector moves and India VIX through every session.</p>
+            </div>
+          </article>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!--=============================== about =================================-->
+<section class="m3x-sec m3x-pt-0 pb-17 md:pb-26 lg:pb-28 xl:pb-33 2xl:pb-39 pt-26 md:pt-30 lg:pt-36 xl:pt-40 2xl:pt-44 overflow-hidden">
+  <div class="main-container space-y-17 md:space-y-26 lg:space-y-28 xl:space-y-33 2xl:space-y-39">
+    <div class="grid grid-cols-12 gap-x-8 md:gap-x-10 lg:gap-x-12 2xl:gap-x-25">
+
+      <div class="col-span-12 md:col-span-6 lg:col-span-8 space-y-8">
+
+        <div class="m3x-block-head space-y-1.5 text-center lg:text-left lg:space-y-3">
+          <h2 data-opai-word-slide-reveal
+            class="xl:text-sora-heading-2 max-md:leading-[1.1] lg:text-sora-heading-3 text-sora-heading-4 font-normal text-white/90 xl:tracking-[-2.4px]">
+            <span class="m3x-loss">Loss by guess.</span> <span class="text-mint m3x-line m3x-win">Win by data.</span>
+          </h2>
+          <p data-opai-word-slide-reveal data-delay="0.2" data-word-delay="0.04"
+            class="text-tagline-2 font-inter-tight w-full font-normal text-white/60 lg:max-w-[620px]">
+            Too many traders lose money acting on tips and gut feeling. Market360X replaces guesswork
+            with alerts built on live market data, explained in plain language and delivered when it
+            matters.
+          </p>
+        </div>
+
+        <!-- Our Vision / Our Mission tabs (the About page's two lead paragraphs); /js/tabs.js -->
+        <div class="m3x-vm" data-tabs data-opai-animate data-delay="0.2">
+          <div class="m3x-vm-tabs" role="tablist" aria-label="Our vision and mission">
+            <button type="button" class="m3x-vm-tab" role="tab" id="m3x-vm-tab-vision" aria-controls="m3x-vm-vision" aria-selected="true"><%- icon('eye') %>Our Vision</button>
+            <button type="button" class="m3x-vm-tab" role="tab" id="m3x-vm-tab-mission" aria-controls="m3x-vm-mission" aria-selected="false" tabindex="-1"><%- icon('target') %>Our Mission</button>
+          </div>
+          <div class="m3x-vm-panels">
+            <div class="m3x-vm-panel" role="tabpanel" id="m3x-vm-vision" aria-labelledby="m3x-vm-tab-vision" tabindex="0">
+              <p class="m3x-vm-lead">To empower retail traders with financial knowledge, advanced market analytics and disciplined risk management, guided by three fundamental objectives.</p>
+            </div>
+            <div class="m3x-vm-panel is-inactive" role="tabpanel" id="m3x-vm-mission" aria-labelledby="m3x-vm-tab-mission" tabindex="-1">
+              <p class="m3x-vm-lead">Market360X aims to make financial market information accessible, understandable and actionable through advanced market analytics, including Option Chain, Open Interest (OI), Put-Call Ratio (PCR), technical indicators, intelligent alerts and risk-management tools.</p>
+            </div>
+          </div>
+          <a href="/about" class="m3x-vm-more">Read more about us<%- icon('arrow-right') %></a>
+        </div>
+      </div>
+      <div class="col-span-12 md:col-span-6 max-md:mt-8 lg:col-span-4" data-opai-animate data-delay="0.3"
+        data-direction="right">
+
+        <figure class="rounded-lg overflow-hidden w-full h-full ">
+          <img loading="lazy" decoding="async" src="/images/trading-laptop.webp" alt="Stock market charts on a laptop" width="687" height="640" class="size-full object-cover">
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+      <!-- ============================= Our Approach ============================= -->
+
+<section class="m3x-sec m3x-pt-0 py-16 md:py-24 lg:py-28 xl:py-33 2xl:py-39">
+  <div class="main-container">
+    <div class="flex flex-col items-start justify-between gap-y-15 md:gap-y-14 lg:flex-row">
+      <div class="m3x-steps-intro w-full space-y-1.5 md:max-w-[544px] md:space-y-3">
+        <h2
+          data-opai-text-reveal
+          data-word-delay="0.03"
+          data-word-rotation-x="120"
+          data-word-offset-y="50"
+          class="xl:text-sora-heading-2 lg:text-sora-heading-3 text-sora-heading-4 font-normal text-white/90 xl:tracking-[-2.4px]"
+        >
+          From alert to trade <span class="text-mint">in four steps.</span>
+        </h2>
+        <p
+          data-opai-text-reveal
+          data-delay="0.3"
+          data-word-delay="0.01"
+          data-word-offset-y="42"
+          data-word-rotation-x="10"
+          class="text-tagline-2 font-inter-tight w-full font-normal text-white/60 lg:max-w-[510px]"
+        >
+          No complex setup. Pick a plan, connect Telegram or WhatsApp, and start receiving alerts
+          in the next market session.
+        </p>
+        <div
+          class="mx-auto mt-9 w-[85%] md:mx-0 md:mt-11 md:w-auto"
+          data-opai-animate
+          data-delay="0.3"
+        >
+          <a href="#pricing" class="magnetic-button w-full md:w-auto inline-block">
+  <div class="group {=$class} relative z-10 w-full">
+    <div
+      class="{=$button-class} flex w-full cursor-pointer items-center justify-center gap-[7px] rounded-full bg-linear-[90deg,#DBE2E6_0%,#FFF_71.63%] px-6 py-[11px] md:py-[13px]"
+    >
+      <span
+        class="font-ibm-plex-mono text-tagline-2 text-background-6 inline-block leading-[1.4] font-medium"
+      >
+        Try our platform
+      </span>
+      <span
+        class="inline-block transition-transform duration-500 ease-in-out group-hover:translate-x-1"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 18 18"
+          fill="none"
+        >
+          <path
+            d="M6.75 13.5L11.25 9L6.75 4.5"
+            stroke="#0D1017"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
+    </div>
+
+    <!-- Gradient Circle-->
+    <span
+      class="magnetic-button-gradient {=$gradient-class} pointer-events-none absolute top-1/2 right-0 z-[-1] h-[56px] w-22 -translate-y-1/2 rounded-full bg-linear-[270deg,#5A9FFF_0%,rgba(255,250,107,0.20)_95.12%] blur-md transition-colors duration-500 ease-in-out content-['']"
+    >
+    </span>
+    <!-- Gradient Circle-2-->
+    <span
+      class="magnetic-button-gradient {=$gradient-class} pointer-events-none absolute top-1/2 right-2 z-[-1] h-[60px] w-[82px] -translate-y-1/2 rounded-full bg-linear-[270deg,#5A9FFF_0%,rgba(255,250,107,0.20)_95.12%] blur-[7px] transition-colors duration-500 ease-in-out content-['']"
+    >
+    </span>
+  </div>
+</a>
+
+        </div>
+      </div>
+
+      <div class="step-container max-lg:space-y-3">
+        <!-- approach-01 -->
+        <article
+          class="flex items-start gap-x-6 md:gap-x-8 lg:gap-x-6"
+          data-opai-animate
+          data-delay="0.2"
+        >
+          <div class="inline-flex flex-col items-center gap-y-3">
+            <span class="text-tagline-3 font-medium text-white/30">01</span>
+            <div class="bg-stroke-3/20 relative h-19 w-0.5 rounded-full">
+              <span class="absolute top-0 left-0 size-full">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="2"
+                  height="100%"
+                  viewBox="0 0 2 30"
+                  fill="none"
+                  class="step-line h-full w-0.5"
+                >
+                  <path
+                    d="M1 0.992188L0.999998 48.4266"
+                    stroke="url(#paint0_linear_5781_17144)"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                  <defs>
+                    <linearGradient
+                      id="paint0_linear_5781_17144"
+                      x1="0.5"
+                      y1="48.4266"
+                      x2="0.499998"
+                      y2="9.81719"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop stop-color="#227EFF" />
+                      <stop offset="0.5" stop-color="#5DDCF6" />
+                      <stop offset="1" stop-color="#212731" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </span>
+            </div>
+          </div>
+          <div class="space-y-1">
+            <h3 class="text-sora-heading-6 font-normal tracking-[-0.6px] text-white/80">
+              Pick your plan.
+            </h3>
+            <p class="text-tagline-2 font-inter-tight w-full font-normal text-white/50">
+              Choose Weekly, Monthly or Yearly Nifty option alerts.
+            </p>
+          </div>
+        </article>
+        <!-- approach-02 -->
+        <article
+          class="flex items-start gap-x-6 md:gap-x-8 lg:gap-x-6"
+          data-opai-animate
+          data-delay="0.3"
+        >
+          <div class="inline-flex flex-col items-center gap-y-3">
+            <span class="text-tagline-3 font-medium text-white/30">02</span>
+            <div class="bg-stroke-3/20 relative h-19 w-0.5 rounded-full">
+              <span class="absolute top-0 left-0 size-full">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="2"
+                  height="100%"
+                  viewBox="0 0 2 30"
+                  fill="none"
+                  class="step-line h-full w-0.5"
+                >
+                  <path
+                    d="M1 0.992188L0.999998 48.4266"
+                    stroke="url(#paint0_linear_5781_17144)"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                  <defs>
+                    <linearGradient
+                      id="paint0_linear_5781_17144"
+                      x1="0.5"
+                      y1="48.4266"
+                      x2="0.499998"
+                      y2="9.81719"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop stop-color="#227EFF" />
+                      <stop offset="0.5" stop-color="#5DDCF6" />
+                      <stop offset="1" stop-color="#212731" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </span>
+            </div>
+          </div>
+          <div class="space-y-1">
+            <h3 class="text-sora-heading-6 font-normal tracking-[-0.6px] text-white/80">
+              We track the market.
+            </h3>
+            <p class="text-tagline-2 font-inter-tight w-full font-normal text-white/50">
+              Price, open interest, PCR and volume are tracked through every session.
+            </p>
+          </div>
+        </article>
+        <!-- approach-03 -->
+        <article
+          class="flex items-start gap-x-6 md:gap-x-8 lg:gap-x-6"
+          data-opai-animate
+          data-delay="0.4"
+        >
+          <div class="inline-flex flex-col items-center gap-y-3">
+            <span class="text-tagline-3 font-medium text-white/30">03</span>
+            <div class="bg-stroke-3/20 relative h-19 w-0.5 rounded-full">
+              <span class="absolute top-0 left-0 size-full">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="2"
+                  height="100%"
+                  viewBox="0 0 2 30"
+                  fill="none"
+                  class="step-line h-full w-0.5"
+                >
+                  <path
+                    d="M1 0.992188L0.999998 48.4266"
+                    stroke="url(#paint0_linear_5781_17144)"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                  <defs>
+                    <linearGradient
+                      id="paint0_linear_5781_17144"
+                      x1="0.5"
+                      y1="48.4266"
+                      x2="0.499998"
+                      y2="9.81719"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop stop-color="#227EFF" />
+                      <stop offset="0.5" stop-color="#5DDCF6" />
+                      <stop offset="1" stop-color="#212731" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </span>
+            </div>
+          </div>
+          <div class="space-y-1">
+            <h3 class="text-sora-heading-6 font-normal tracking-[-0.6px] text-white/80">
+              Get a clear alert.
+            </h3>
+            <p class="text-tagline-2 font-inter-tight w-full font-normal text-white/50">
+              Each alert shows the direction, signal strength and the data behind it.
+            </p>
+          </div>
+        </article>
+        <!-- approach-04 -->
+        <article
+          class="flex items-start gap-x-6 md:gap-x-8 lg:gap-x-6"
+          data-opai-animate
+          data-delay="0.5"
+        >
+          <div class="inline-flex flex-col items-center gap-y-3">
+            <span class="text-tagline-3 font-medium text-white/30">04</span>
+          </div>
+          <div class="space-y-1">
+            <h3 class="text-sora-heading-6 font-normal tracking-[-0.6px] text-white/80">
+              Execute with your broker.
+            </h3>
+            <p class="text-tagline-2 font-inter-tight w-full font-normal text-white/50">
+              Place the trade on your own platform and track every result in your dashboard.
+            </p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+      <!-- ============================= Pricing ============================= -->
+<section
+  id="pricing"
+  class="m3x-sec m3x-pt-0 {=$section-class} bg-background-6 price-scope overflow-x-hidden pt-16 pb-16 md:pt-20 md:pb-26 lg:pt-26 lg:pb-26 xl:pt-28 xl:pb-28"
+>
+  <div class="main-container space-y-13 lg:space-y-19">
+    <div class="m3x-sec-head space-y-1.5 text-center md:space-y-3 lg:mx-auto lg:max-w-[680px]">
+      <p class="m3x-eyebrow">Nifty Option Alert</p>
+      <h2
+        data-opai-text-reveal
+        data-word-delay="0.03"
+        data-word-rotation-x="120"
+        data-word-offset-y="50"
+        class="xl:text-sora-heading-2 lg:text-sora-heading-3 text-sora-heading-4 font-normal tracking-[-2.4px] text-white/90"
+      >
+        Nifty option alerts,
+        <span class="text-mint"> priced by the week</span>
+      </h2>
+    </div>
+
+    <!-- pricing cards: views/partials/pricing-cards.ejs (prices from src/site/plans.ts) -->
+    <%- include('../partials/pricing-cards') %>
+  </div>
+</section>
+
+      <!-- ============================= FAQ ============================= -->
+<section id="faq" class="m3x-sec m3x-pt-0 py-16 md:py-20 lg:py-24 xl:py-28">
+  <div class="main-container">
+    <div class="m3x-faq-layout text-center">
+      <!-- faq title -->
+      <div class="m3x-sec-head mx-auto mb-8 space-y-1.5 md:max-w-[570px] md:space-y-3">
+        <h2
+          data-opai-text-reveal
+          data-word-delay="0.03"
+          data-word-rotation-x="120"
+          data-word-offset-y="59"
+          class="xl:text-sora-heading-2 lg:text-sora-heading-3 text-sora-heading-4 font-normal tracking-[-2.4px] text-white/90"
+        >
+          Questions?
+          <span class="text-mint m3x-line">We've got answers.</span>
+        </h2>
+        <p
+          data-opai-text-reveal
+          data-delay="0.2"
+          data-word-delay="0.01"
+          data-word-offset-y="42"
+          data-word-rotation-x="10"
+          class="text-tagline-2 font-inter-tight text-center text-white/60"
+        >
+          Everything you need to know about Market360X, how our alerts work, and how to get
+          started.
+        </p>
+      </div>
+
+      <!-- Avatars and Trust Indicator -->
+      <div
+        class="flex items-center justify-center gap-4 pb-14 max-[375px]:flex-col md:pb-16 xl:pb-[70px]"
+      >
+        <div class="flex -space-x-2.5">
+          <img loading="lazy" decoding="async"
+            data-opai-avatar
+            data-avatar-delay="0.2"
+            class="inline-block size-9 rounded-full ring-2 ring-white"
+            src="/images/opai-avatar-img-01.png"
+            alt="Avatar 1"
+          />
+          <img loading="lazy" decoding="async"
+            data-opai-avatar
+            data-avatar-delay="0.3"
+            class="inline-block size-9 rounded-full ring-2 ring-white"
+            src="/images/opai-avatar-img-02.png"
+            alt="Avatar 2"
+          />
+          <img loading="lazy" decoding="async"
+            data-opai-avatar
+            data-avatar-delay="0.4"
+            class="inline-block size-9 rounded-full ring-2 ring-white"
+            src="/images/opai-avatar-img-03.png"
+            alt="Avatar 3"
+          />
+          <img loading="lazy" decoding="async"
+            data-opai-avatar
+            data-avatar-delay="0.5"
+            class="inline-block size-9 rounded-full ring-2 ring-white"
+            src="/images/opai-avatar-img-04.png"
+            alt="Avatar 4"
+          />
+          <div
+            data-opai-avatar
+            data-avatar-delay="0.6"
+            class="text-tagline-4 inline-flex size-9 items-center justify-center rounded-full bg-[#0d0d1280] font-medium text-white/80 ring-2 ring-white backdrop-blur-[6px]"
+          >
+            99+
+          </div>
+        </div>
+        <div class="text-left max-[375px]:text-center">
+          <p
+            class="text-tagline-3 block font-medium text-white/90"
+            data-opai-animate
+            data-delay="0.3"
+          >
+            Trusted by
+            <span
+              data-counter-trigger
+              data-counter-value="200"
+              data-counter-duration="1.8"
+              class="inline-flex items-baseline"
+            >
+              <number-flow data-counter-number></number-flow><span>+</span>
+            </span>
+          </p>
+          <p class="text-tagline-4 text-white/60" data-opai-animate data-delay="0.4">
+            Traders across India
+          </p>
+        </div>
+      </div>
+
+      <!-- accordion -->
+      <div class="accordion mx-auto w-full max-w-[850px] space-y-3 pb-14">
+        <!-- item one  -->
+        <div
+          class="border-stroke-3/20 default-open accordion-item relative z-10 overflow-hidden rounded-xl border"
+        >
+          <!-- active gradient -->
+          <span
+            class="accordion-active-gradient absolute top-0 left-0 -z-10 opacity-0 transition-all delay-75 duration-500 ease-in-out"
+          >
+            <img loading="lazy" decoding="async" src="/images/gradient/opai-7-green.svg" alt="faq-gradient" />
+          </span>
+
+          <h3
+            class="accordion-action flex w-full cursor-pointer items-start justify-between px-5 pt-6 pb-6 transition-all duration-300 ease-in-out max-md:gap-4 md:items-center md:px-6"
+          >
+            <button
+              class="font-inter-tight text-tagline-1 cursor-pointer text-white/90 max-md:text-left"
+            >
+              What is Market360X?
+            </button>
+            <div class="accordion-plus-icon"></div>
+          </h3>
+          <div class="accordion-content">
+            <p
+              class="text-tagline-2 font-inter-tight cursor-text px-5 pb-5 text-left text-white/50 md:px-6 md:pb-6"
+            >
+              Market360X is a trading alerts service. We send clear, data-backed alerts for Nifty,
+              Bank Nifty, Sensex, options and stocks, each backed by price, open interest, PCR and
+              volume data, so you can act on data instead of guesswork.
+            </p>
+          </div>
+        </div>
+
+        <!-- item two  -->
+        <div
+          class="border-stroke-3/20 accordion-item relative z-10 overflow-hidden rounded-xl border"
+        >
+          <!-- active gradient -->
+          <span
+            class="accordion-active-gradient absolute top-0 left-0 -z-10 opacity-0 transition-all delay-75 duration-500 ease-in-out"
+          >
+            <img loading="lazy" decoding="async" src="/images/gradient/opai-7-green.svg" alt="faq-gradient" />
+          </span>
+
+          <h3
+            class="accordion-action flex w-full cursor-pointer items-start justify-between px-5 pt-6 pb-6 transition-all duration-300 ease-in-out max-md:gap-4 md:items-center md:px-6"
+          >
+            <button
+              class="font-inter-tight text-tagline-1 cursor-pointer text-white/90 max-md:text-left"
+            >
+              Does Market360X place trades for me?
+            </button>
+            <div class="accordion-plus-icon"></div>
+          </h3>
+          <div class="accordion-content">
+            <p
+              class="text-tagline-2 font-inter-tight cursor-text px-5 pb-5 text-left text-white/50 md:px-6 md:pb-6"
+            >
+              No. Market360X sends alerts and you stay in full control. You decide which alerts to
+              act on and place trades with your own broker. We never hold your funds.
+            </p>
+          </div>
+        </div>
+
+        <!-- item three  -->
+        <div
+          class="border-stroke-3/20 accordion-item relative z-10 overflow-hidden rounded-xl border"
+        >
+          <!-- active gradient -->
+          <span
+            class="accordion-active-gradient absolute top-0 left-0 -z-10 opacity-0 transition-all delay-75 duration-500 ease-in-out"
+          >
+            <img loading="lazy" decoding="async" src="/images/gradient/opai-7-green.svg" alt="faq-gradient" />
+          </span>
+
+          <h3
+            class="accordion-action flex w-full cursor-pointer items-start justify-between px-5 pt-6 pb-6 transition-all duration-300 ease-in-out max-md:gap-4 md:items-center md:px-6"
+          >
+            <button
+              class="font-inter-tight text-tagline-1 cursor-pointer text-white/90 max-md:text-left"
+            >
+              How are the alerts created?
+            </button>
+            <div class="accordion-plus-icon"></div>
+          </h3>
+          <div class="accordion-content">
+            <p
+              class="text-tagline-2 font-inter-tight cursor-text px-5 pb-5 text-left text-white/50 md:px-6 md:pb-6"
+            >
+              Each alert is based on live market data: price action, volume, open interest, PCR and
+              market breadth. An alert is only sent when these line up, and every alert includes the
+              reason behind it.
+            </p>
+          </div>
+        </div>
+
+        <!-- item four  -->
+        <div
+          class="border-stroke-3/20 accordion-item relative z-10 overflow-hidden rounded-xl border"
+        >
+          <!-- active gradient -->
+          <span
+            class="accordion-active-gradient absolute top-0 left-0 -z-10 opacity-0 transition-all delay-75 duration-500 ease-in-out"
+          >
+            <img loading="lazy" decoding="async" src="/images/gradient/opai-7-green.svg" alt="faq-gradient" />
+          </span>
+
+          <h3
+            class="accordion-action flex w-full cursor-pointer items-start justify-between px-5 pt-6 pb-6 transition-all duration-300 ease-in-out max-md:gap-4 md:items-center md:px-6"
+          >
+            <button
+              class="font-inter-tight text-tagline-1 cursor-pointer text-white/90 max-md:text-left"
+            >
+              Which markets does Market360X cover?
+            </button>
+            <div class="accordion-plus-icon"></div>
+          </h3>
+          <div class="accordion-content">
+            <p
+              class="text-tagline-2 font-inter-tight cursor-text px-5 pb-5 text-left text-white/50 md:px-6 md:pb-6"
+            >
+              Indian markets only: Nifty 50, Sensex, Bank Nifty and the other NSE and BSE indices,
+              plus Indian stock options and equities. Nifty Option Alert is available now, and more alert
+              plans are coming soon. Alerts work with any broker you already use.
+            </p>
+          </div>
+        </div>
+        <!-- item five  -->
+        <div
+          class="border-stroke-3/20 accordion-item relative z-10 overflow-hidden rounded-xl border"
+        >
+          <!-- active gradient -->
+          <span
+            class="accordion-active-gradient absolute top-0 left-0 -z-10 opacity-0 transition-all delay-75 duration-500 ease-in-out"
+          >
+            <img loading="lazy" decoding="async" src="/images/gradient/opai-7-green.svg" alt="faq-gradient" />
+          </span>
+
+          <h3
+            class="accordion-action flex w-full cursor-pointer items-start justify-between px-5 pt-6 pb-6 transition-all duration-300 ease-in-out max-md:gap-4 md:items-center md:px-6"
+          >
+            <button
+              class="font-inter-tight text-tagline-1 cursor-pointer text-white/90 max-md:text-left"
+            >
+              Is Market360X suitable for beginners?
+            </button>
+            <div class="accordion-plus-icon"></div>
+          </h3>
+          <div class="accordion-content">
+            <p
+              class="text-tagline-2 font-inter-tight cursor-text px-5 pb-5 text-left text-white/50 md:px-6 md:pb-6"
+            >
+              Yes. Every alert is explained in plain language, so you understand why a trade was
+              flagged, not just what to do. If you are new to trading, we recommend starting small and
+              learning how alerts behave before committing significant capital.
+            </p>
+          </div>
+        </div>
+        <!-- item six  -->
+        <div
+          class="border-stroke-3/20 accordion-item relative z-10 overflow-hidden rounded-xl border"
+        >
+          <!-- active gradient -->
+          <span
+            class="accordion-active-gradient absolute top-0 left-0 -z-10 opacity-0 transition-all delay-75 duration-500 ease-in-out"
+          >
+            <img loading="lazy" decoding="async" src="/images/gradient/opai-7-green.svg" alt="faq-gradient" />
+          </span>
+
+          <h3
+            class="accordion-action flex w-full cursor-pointer items-start justify-between px-5 pt-6 pb-6 transition-all duration-300 ease-in-out max-md:gap-4 md:items-center md:px-6"
+          >
+            <button
+              class="font-inter-tight text-tagline-1 cursor-pointer text-white/90 max-md:text-left"
+            >
+              Can I cancel my subscription anytime?
+            </button>
+            <div class="accordion-plus-icon"></div>
+          </h3>
+          <div class="accordion-content">
+            <p
+              class="text-tagline-2 font-inter-tight cursor-text px-5 pb-5 text-left text-white/50 md:px-6 md:pb-6"
+            >
+              Yes. There are no long-term contracts. You can upgrade, downgrade or cancel your plan at
+              any time from your account settings.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mx-auto w-[85%] text-center md:mx-0 md:w-auto" data-opai-animate data-delay="0.2">
+        <a href="/contact" class="magnetic-button w-full md:w-auto inline-block">
+  <div class="group {=$class} relative z-10 w-full">
+    <div
+      class="{=$button-class} flex w-full cursor-pointer items-center justify-center gap-[7px] rounded-full bg-linear-[90deg,#DBE2E6_0%,#FFF_71.63%] px-6 py-[11px] md:py-[13px]"
+    >
+      <span
+        class="font-ibm-plex-mono text-tagline-2 text-background-6 inline-block leading-[1.4] font-medium"
+      >
+        Still have questions? 
+      </span>
+      <span
+        class="inline-block transition-transform duration-500 ease-in-out group-hover:translate-x-1"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 18 18"
+          fill="none"
+        >
+          <path
+            d="M6.75 13.5L11.25 9L6.75 4.5"
+            stroke="#0D1017"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
+    </div>
+
+    <!-- Gradient Circle-->
+    <span
+      class="magnetic-button-gradient {=$gradient-class} pointer-events-none absolute top-1/2 right-0 z-[-1] h-[56px] w-22 -translate-y-1/2 rounded-full bg-linear-[270deg,#5A9FFF_0%,rgba(255,250,107,0.20)_95.12%] blur-md transition-colors duration-500 ease-in-out content-['']"
+    >
+    </span>
+    <!-- Gradient Circle-2-->
+    <span
+      class="magnetic-button-gradient {=$gradient-class} pointer-events-none absolute top-1/2 right-2 z-[-1] h-[60px] w-[82px] -translate-y-1/2 rounded-full bg-linear-[270deg,#5A9FFF_0%,rgba(255,250,107,0.20)_95.12%] blur-[7px] transition-colors duration-500 ease-in-out content-['']"
+    >
+    </span>
+  </div>
+</a>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <!-- ============================= Closing CTA ============================= -->
+<%- include('../partials/cta-band') %>
+
+    </main>
+
+<%- include('../partials/footer') %>

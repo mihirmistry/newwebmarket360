@@ -1,0 +1,234 @@
+<% const acct = typeof account !== 'undefined' ? account : null; %>
+<header
+  data-opai-animate
+  data-delay="0.1"
+  data-direction="top"
+  class="header-scroll bg-background-6/10 fixed top-0 right-0 left-0 z-50 w-full px-2 py-4 backdrop-blur-[25px] lg:py-0"
+>
+  <%- include('ticker') %>
+  <nav class="relative mx-auto max-w-[1920px]">
+    <div class="flex items-center justify-between xl:gap-20 2xl:gap-32">
+      <a href="/" class="flex items-center gap-1.5">
+        <figure class="m3x-brand m3x-brand--header">
+          <img loading="lazy" decoding="async" class="m3x-logo-light" src="/images/logo/market360x-wordmark.webp" alt="Market360X - Loss by Guess, Win by Data" width="420" height="102" /><img loading="lazy" decoding="async" class="m3x-logo-dark" src="/images/logo/market360x-wordmark-white.webp" alt="Market360X - Loss by Guess, Win by Data" width="612" height="145" />
+        </figure>
+        <span class="sr-only">Market360X</span>
+      </a>
+
+      <ul class="m3x-trade-nav hidden items-center gap-x-5 lg:flex xl:gap-x-7">
+<% nav.items.forEach(function (item) { const active = activeNav === item.key || (item.children && item.children.some(function (c) { return c.key === activeNav; })); %>
+        <li class="group/nav-item relative py-6<%= item.children || item.steps ? ' m3x-has-menu' : '' %><%= item.steps ? ' m3x-has-mega' : '' %>">
+          <a href="<%= item.href %>" class="flex items-center gap-1.5"<%- item.children || item.steps ? ' aria-haspopup="true"' : '' %><%- activeNav === item.key ? ' aria-current="page"' : '' %>>
+            <span class="text-tagline-3 font-ibm-plex-mono leading-[21.7px] font-normal tracking-[1px] <%= active ? 'text-white' : 'text-white/65' %> transition-colors duration-500 group-hover/nav-item:text-white"><%= item.label %></span>
+            <% if (item.children || item.steps) { %><svg class="m3x-caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" /></svg><% } %>
+          </a>
+          <% if (item.steps) { %>
+          <div class="m3x-mega" role="group" aria-label="<%= item.label %>">
+            <div class="m3x-mega-inner">
+              <div class="m3x-mega-head">
+                <p class="m3x-mega-eyebrow"><%= item.label %><em>Coming soon</em></p>
+                <p class="m3x-mega-title"><%- item.steps.map(function (s) { return '<span>' + s.title + '</span>'; }).join('<i aria-hidden="true">&bull;</i>') %></p>
+              </div>
+              <ol class="m3x-mega-steps">
+                <% item.steps.forEach(function (step, i) { %>
+                <li class="m3x-mega-step">
+                  <figure class="m3x-mega-ill"><img loading="lazy" decoding="async" src="<%= step.image %>" alt="" loading="lazy" decoding="async" /></figure>
+                  <p class="m3x-mega-num"><%= String(i + 1).padStart(2, '0') %></p>
+                  <p class="m3x-mega-step-title"><%= step.title %></p>
+                  <p class="m3x-mega-text"><%= step.text %></p>
+                </li>
+                <% }) %>
+              </ol>
+            </div>
+          </div>
+          <% } %>
+          <% if (item.children) { %>
+          <ul class="m3x-dropdown" aria-label="<%= item.label %>">
+            <% item.children.forEach(function (child) { %>
+            <% if (child.href) { %><li><a href="<%= child.href %>"<%- activeNav === child.key ? ' aria-current="page"' : '' %>><%= child.label %></a></li>
+            <% } else { %><li><span class="m3x-soon" aria-disabled="true"><%= child.label %><em>Soon</em></span></li>
+            <% } %>
+            <% }) %>
+          </ul>
+          <% } %>
+        </li>
+<% }) %>
+      </ul>
+
+      <div class="m3x-head-actions">
+      <form class="m3x-search m3x-search--head" role="search" action="/" data-site-search>
+        <label class="sr-only" for="m3x-search-head">Search the site</label>
+        <input id="m3x-search-head" type="search" placeholder="Search" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="m3x-search-head-list" />
+        <button type="submit" class="m3x-search-btn" aria-label="Search"><%- icon('search') %></button>
+        <ul id="m3x-search-head-list" class="m3x-search-list" role="listbox" aria-label="Pages" data-search-list hidden></ul>
+      </form>
+      <%- include('market-indicator') %>
+      <button type="button" class="m3x-theme-btn" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode" title="Dark mode"><%- icon('moon', 'is-moon') %><%- icon('sun', 'is-sun') %></button>
+      <% if (features.customerAccounts) { %><%- include('account-menu', { account: acct }) %><% } %>
+
+      <div class="hidden lg:block">
+        <a href="/nifty-alert" class="magnetic-button {=$anchor-class} inline-block">
+  <div class="group {=$class} relative z-10 w-full">
+    <div
+      class="h-9  flex w-full cursor-pointer items-center justify-center gap-[7px] rounded-full bg-linear-[90deg,#DBE2E6_0%,#FFF_71.63%] px-6 py-[11px] md:py-[13px]"
+    >
+      <span
+        class="font-ibm-plex-mono text-tagline-2 text-background-6 inline-block leading-[1.4] font-medium"
+      >
+        Try now
+      </span>
+      <span
+        class="inline-block transition-transform duration-500 ease-in-out group-hover:translate-x-1"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 18 18"
+          fill="none"
+        >
+          <path
+            d="M6.75 13.5L11.25 9L6.75 4.5"
+            stroke="#0D1017"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
+    </div>
+
+    <!-- Gradient Circle-->
+    <span
+      class="magnetic-button-gradient h-10! pointer-events-none absolute top-1/2 right-0 z-[-1] h-[56px] w-22 -translate-y-1/2 rounded-full bg-linear-[270deg,#5A9FFF_0%,rgba(255,250,107,0.20)_95.12%] blur-md transition-colors duration-500 ease-in-out content-['']"
+    >
+    </span>
+    <!-- Gradient Circle-2-->
+    <span
+      class="magnetic-button-gradient h-10! pointer-events-none absolute top-1/2 right-2 z-[-1] h-[60px] w-[82px] -translate-y-1/2 rounded-full bg-linear-[270deg,#5A9FFF_0%,rgba(255,250,107,0.20)_95.12%] blur-[7px] transition-colors duration-500 ease-in-out content-['']"
+    >
+    </span>
+  </div>
+</a>
+
+      </div>
+
+      <button
+        type="button"
+        class="nav-hamburger flex cursor-pointer flex-col items-end justify-center space-y-2 lg:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-sidebar"
+        aria-label="Open menu"
+      >
+        <span class="sr-only">Toggle menu</span>
+        <span class="bg-background-7 block h-px w-9"></span>
+        <span class="bg-background-7 block h-px w-6"></span>
+      </button>
+      </div>
+    </div>
+
+
+  </nav>
+  <aside
+  id="mobile-sidebar"
+  class="sidebar m3x-msb fixed top-0 right-0 z-9999 h-screen w-full translate-x-full transition-all duration-300 sm:w-1/2 lg:hidden"
+  aria-label="Mobile menu"
+>
+<% const navIcons = { home: 'house', options: 'bell-ring', club: 'crown', features: 'sparkles', about: 'info', contact: 'phone' }; %>
+  <div class="m3x-msb-inner">
+    <div class="m3x-msb-head">
+      <a href="/">
+        <span class="sr-only">Home</span>
+        <figure class="m3x-brand m3x-brand--sidebar">
+          <img loading="lazy" decoding="async" class="m3x-logo-light" src="/images/logo/market360x-wordmark.webp" alt="Market360X - Loss by Guess, Win by Data" width="420" height="102" /><img loading="lazy" decoding="async" class="m3x-logo-dark" src="/images/logo/market360x-wordmark-white.webp" alt="Market360X - Loss by Guess, Win by Data" width="612" height="145" />
+        </figure>
+      </a>
+      <button type="button" class="nav-hamburger-close m3x-msb-close" aria-label="Close menu"><%- icon('x') %></button>
+    </div>
+
+    <nav class="m3x-msb-body" aria-label="Main">
+      <form class="m3x-search m3x-search--menu" role="search" action="/" data-site-search>
+        <label class="sr-only" for="m3x-search-menu">Search the site</label>
+        <input id="m3x-search-menu" type="search" placeholder="Search pages" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="m3x-search-menu-list" />
+        <button type="submit" class="m3x-search-btn" aria-label="Search"><%- icon('search') %></button>
+        <ul id="m3x-search-menu-list" class="m3x-search-list" role="listbox" aria-label="Pages" data-search-list hidden></ul>
+      </form>
+      <ul class="m3x-msb-list">
+<% nav.items.forEach(function (item) { const active = activeNav === item.key || (item.children && item.children.some(function (c) { return c.key === activeNav; })); const ico = navIcons[item.key] || 'chevron-right'; %>
+        <li>
+          <% if (item.children) { %>
+          <details class="m3x-msb-group">
+            <summary class="m3x-msb-link<%= active ? ' is-active' : '' %>">
+              <span class="m3x-msb-ico"><%- icon(ico) %></span>
+              <span class="m3x-msb-label"><%= item.label %></span>
+              <%- icon('chevron-down', 'm3x-msb-caret') %>
+            </summary>
+            <ul class="m3x-msb-sub">
+              <% item.children.forEach(function (child) { %>
+              <% if (child.href) { %><li><a href="<%= child.href %>" class="m3x-msb-sublink<%= activeNav === child.key ? ' is-active' : '' %>"<%- activeNav === child.key ? ' aria-current="page"' : '' %>><span><%= child.label %></span><em class="m3x-msb-live">Live</em></a></li>
+              <% } else { %><li><span class="m3x-msb-sublink is-soon" aria-disabled="true"><span><%= child.label %></span><em>Soon</em></span></li>
+              <% } %>
+              <% }) %>
+            </ul>
+          </details>
+          <% } else if (item.steps) { %>
+          <details class="m3x-msb-group">
+            <summary class="m3x-msb-link<%= active ? ' is-active' : '' %>">
+              <span class="m3x-msb-ico"><%- icon(ico) %></span>
+              <span class="m3x-msb-label"><%= item.label %></span>
+              <%- icon('chevron-down', 'm3x-msb-caret') %>
+            </summary>
+            <ol class="m3x-msb-sub m3x-msb-steps">
+              <% item.steps.forEach(function (step, i) { %>
+              <li class="m3x-msb-sublink"><span><b><%= String(i + 1).padStart(2, '0') %></b><%= step.title %></span></li>
+              <% }) %>
+              <li class="m3x-msb-sublink is-soon"><span>Launching soon</span></li>
+            </ol>
+          </details>
+          <% } else { %>
+          <a href="<%= item.href %>" class="m3x-msb-link<%= active ? ' is-active' : '' %>"<%- activeNav === item.key ? ' aria-current="page"' : '' %>>
+            <span class="m3x-msb-ico"><%- icon(ico) %></span>
+            <span class="m3x-msb-label"><%= item.label %></span>
+            <%- icon('chevron-right', 'm3x-msb-caret') %>
+          </a>
+          <% } %>
+        </li>
+<% }) %>
+      </ul>
+
+      <% if (!features.customerAccounts) { %>
+      <% } else if (acct) { %>
+      <div class="m3x-mobile-acct">
+        <p class="m3x-mobile-acct-who"><span class="m3x-avatar" aria-hidden="true"><%= acct.initials %></span><span><strong><%= acct.name %></strong><small><%= acct.email %></small></span></p>
+        <ul>
+          <li><a href="/account/profile"><%- icon('circle-user-round') %>Profile</a></li>
+          <li><a href="/account"><%- icon('layout-dashboard') %>Dashboard</a></li>
+          <li><a href="/account/plan"><%- icon('credit-card') %>Plan</a></li>
+          <li>
+            <form method="post" action="/account/logout">
+              <input type="hidden" name="_csrf" value="<%= acct.csrfToken %>" />
+              <button type="submit"><%- icon('log-out') %>Log out</button>
+            </form>
+          </li>
+        </ul>
+      </div>
+      <% } else { %>
+      <div class="m3x-mobile-acct">
+        <ul><li><a href="/account" data-auth-open><%- icon('circle-user-round') %>Log in</a></li></ul>
+      </div>
+      <% } %>
+
+      <div class="m3x-msb-contact">
+        <p class="m3x-msb-eyebrow">Need help?</p>
+        <a href="tel:+919211384013"><%- icon('phone') %>+91 92113 84013</a>
+        <a href="mailto:contact@market360x.com"><%- icon('mail') %>contact@market360x.com</a>
+      </div>
+    </nav>
+
+    <div class="m3x-msb-foot">
+      <a href="/nifty-alert" class="m3x-msb-cta">Try now <%- icon('arrow-right') %></a>
+    </div>
+  </div>
+</aside>
+
+
+</header>

@@ -1,0 +1,35 @@
+<%# Opening of every /account page: site header, then the account sidebar. Pages close with _end. %>
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<%
+  const links = [
+    { key: 'dashboard', href: '/account', label: 'Dashboard', icon: 'layout-dashboard' },
+    { key: 'profile', href: '/account/profile', label: 'Profile', icon: 'circle-user-round' },
+    { key: 'plan', href: '/account/plan', label: 'Plan', icon: 'credit-card' },
+  ];
+%>
+    <main class="bg-background-6">
+      <div class="main-container m3x-acct-page">
+        <aside class="m3x-acct-side" aria-label="Your account">
+          <div class="m3x-acct-card">
+            <span class="m3x-avatar is-xl" aria-hidden="true"><%= account.initials %></span>
+            <div>
+              <p class="m3x-acct-card-name"><%= customer.name %></p>
+              <p class="m3x-acct-card-email"><%= customer.email %></p>
+            </div>
+          </div>
+          <nav class="m3x-acct-nav" aria-label="Account pages">
+            <% links.forEach(function (l) { %>
+            <a href="<%= l.href %>"<%- accountPage === l.key ? ' aria-current="page"' : '' %>><%- icon(l.icon) %><%= l.label %></a>
+            <% }) %>
+            <form method="post" action="/account/logout">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <button type="submit"><%- icon('log-out') %>Log out</button>
+            </form>
+          </nav>
+        </aside>
+
+        <div class="m3x-acct-main">
+          <% if (flash) { %>
+          <p class="m3x-flash is-<%= flash.type %>" role="status"><%- icon(flash.type === 'success' ? 'circle-check' : 'circle-alert') %><%= flash.message %></p>
+          <% } %>

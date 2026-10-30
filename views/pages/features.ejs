@@ -1,0 +1,348 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+    <main class="bg-background-6">
+      <!-- ============================= Features ============================= -->
+
+<section class="m3x-sec m3x-sec--hero pt-28 md:pt-34 lg:pt-39 xl:pt-44 2xl:pt-50 pb-16 md:pb-24 lg:pb-28 xl:pb-33 2xl:pb-39 py-16 md:py-24 lg:py-28 xl:py-33 2xl:py-39">
+  <div class="main-container">
+    <div class="m3x-sec-head mb-13 space-y-1.5 text-center lg:mb-19 xl:space-y-3">
+      <h2
+        data-opai-text-reveal
+        data-word-delay="0.1"
+        data-word-rotation-x="120"
+        data-word-offset-y="50"
+        class="xl:text-sora-heading-2 lg:text-sora-heading-3 text-sora-heading-4 font-normal text-white/90 xl:tracking-[-2.4px]"
+      >
+        Everything you need to <span class="text-mint">trade with confidence.</span>
+      </h2>
+    </div>
+
+    <!-- features: the same alert cards as the homepage (a real Market360X terminal session, /js/terminal-cards.js) -->
+    <div
+      class="glowing-cards grid grid-cols-1 gap-x-8 max-md:space-y-8 md:grid-cols-2 lg:grid-cols-3"
+    >
+      <!-- column 01 -->
+      <article
+        data-opai-animate
+        data-delay="0.3"
+        class="glowing-card m3x-flow-card bg-background-5 rounded-lg p-7 lg:p-10.5"
+      >
+        <div
+          class="ease-team-ease-1 absolute top-[-3%] right-[-20%] z-0 size-37 bg-white mix-blend-plus-lighter blur-[25.5px]"
+        ></div>
+        <div
+          class="bg-opai-blue ease-team-ease-1 absolute top-[-4.5%] right-[-13%] z-0 size-34 blur-[42px]"
+        ></div>
+        <!-- the Alert Engine log from a real terminal session (replayed) -->
+        <div class="relative z-12"><%- include('../partials/terminal-alerts') %></div>
+
+        <div class="m3x-flow-copy relative z-12 space-y-1">
+          <h3 class="text-sora-heading-5 font-normal tracking-[-0.72px] text-white/80">
+            Alerts as they happen
+          </h3>
+          <p class="text-tagline-3 text-white/50">
+            Every alert appears the moment it fires, with the time, so you never miss a move.
+          </p>
+        </div>
+      </article>
+
+      <!-- column 02 -->
+      <div class="space-y-8">
+        <article
+          data-opai-animate
+          data-delay="0.4"
+          class="glowing-card bg-background-5 rounded-lg p-8 lg:p-10.5"
+        >
+          <div
+            class="ease-team-ease-1 absolute top-[-5%] left-[-25%] z-0 size-37 bg-white mix-blend-plus-lighter blur-[25.5px]"
+          ></div>
+          <div
+            class="bg-opai-blue ease-team-ease-1 absolute top-[-6.5%] left-[-17%] z-0 size-34 blur-[42px]"
+          ></div>
+
+          <!-- the terminal chart: NIFTY candles with the alerts marked on them (real session) -->
+          <div class="relative z-14"><%- include('../partials/terminal-chart') %></div>
+          <div class="relative z-20 space-y-1 pt-10 lg:pt-18">
+            <h3 class="text-sora-heading-5 font-normal tracking-[-0.72px] text-white/80">
+              Alerts on the chart
+            </h3>
+            <p class="text-tagline-3 text-white/50">
+              See each alert right on the Nifty chart, exactly where the move happened.
+            </p>
+          </div>
+        </article>
+      </div>
+
+      <!-- column 03 -->
+      <div class="space-y-8">
+        <article
+          data-opai-animate
+          data-delay="0.5"
+          class="glowing-card bg-background-5 space-y-9.5 rounded-lg p-8 lg:p-10.5"
+        >
+          <div class="relative z-30 space-y-6">
+            <div class="logos-marquee-container">
+              <div class="flex items-center justify-center gap-x-6">
+                <figure
+                  class="bg-background-4 ml-6 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/telegram.svg" alt="Telegram" class="size-10 object-contain" />
+                </figure>
+                <figure
+                  class="bg-background-4 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/whatsapp.svg" alt="WhatsApp" class="size-10 object-contain" />
+                </figure>
+                <figure
+                  class="bg-background-4 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/slack.svg" alt="Slack" class="size-10 object-contain" />
+                </figure>
+                <figure
+                  class="bg-background-4 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/x.svg" alt="X" class="size-10 object-contain" />
+                </figure>
+              </div>
+            </div>
+
+            <div class="logos-right-marquee-container">
+              <div class="flex items-center justify-center gap-x-6">
+                <figure
+                  class="bg-background-4 ml-6 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/x.svg" alt="X" class="size-10 object-contain" />
+                </figure>
+                <figure
+                  class="bg-background-4 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/reddit.svg" alt="Reddit" class="size-10 object-contain" />
+                </figure>
+                <figure
+                  class="bg-background-4 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/youtube.svg" alt="YouTube" class="size-10 object-contain" />
+                </figure>
+                <figure
+                  class="bg-background-4 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/telegram.svg" alt="Telegram" class="size-10 object-contain" />
+                </figure>
+                <figure
+                  class="bg-background-4 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/slack.svg" alt="Slack" class="size-10 object-contain" />
+                </figure>
+                <figure
+                  class="bg-background-4 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/whatsapp.svg" alt="WhatsApp" class="size-10 object-contain" />
+                </figure>
+              </div>
+            </div>
+
+            <div class="logos-marquee-container">
+              <div class="flex items-center justify-center gap-x-6">
+                <figure
+                  class="bg-background-4 ml-6 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/whatsapp.svg" alt="WhatsApp" class="size-10 object-contain" />
+                </figure>
+                <figure
+                  class="bg-background-4 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/telegram.svg" alt="Telegram" class="size-10 object-contain" />
+                </figure>
+                <figure
+                  class="bg-background-4 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/x.svg" alt="X" class="size-10 object-contain" />
+                </figure>
+                <figure
+                  class="bg-background-4 flex size-16 items-center justify-center rounded-[360px] p-3.5 md:size-[72px]"
+                >
+                  <img loading="lazy" decoding="async" src="/images/icons/slack.svg" alt="Slack" class="size-10 object-contain" />
+                </figure>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative z-20 space-y-1">
+            <h3 class="text-sora-heading-5 font-normal tracking-[-0.72px] text-white/80">
+              Real-time Trade Alerts
+            </h3>
+            <p class="text-tagline-3 text-white/50">
+              Get alerts the moment a setup forms, on Telegram, WhatsApp, email or push
+              notifications, wherever you are.
+            </p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+      <!-- ============================= Inside the terminal (the screens the homepage showcases) ============================= -->
+<section id="terminal" class="m3x-sec m3x-pt-0 bg-background-6" aria-labelledby="m3x-terminal-title">
+  <div class="main-container">
+    <div class="m3x-sec-head mb-13 space-y-1.5 text-center lg:mb-19 lg:space-y-3">
+      <h2
+        id="m3x-terminal-title"
+        data-opai-text-reveal
+        data-word-delay="0.1"
+        data-word-rotation-x="120"
+        data-word-offset-y="50"
+        class="xl:text-sora-heading-2 lg:text-sora-heading-3 text-sora-heading-4 font-normal tracking-[-2.4px] text-white/90"
+      >
+        One alert service. <span class="text-mint m3x-line">Every screen you need.</span>
+      </h2>
+    </div>
+    <ul class="m3x-screens">
+      <li class="m3x-screen" data-opai-animate data-delay="0.2">
+        <figure class="m3x-screen-shot"><img src="/images/banners/banner1.webp" alt="Dragger-Puller view showing Nifty 50 stocks pulling and dragging the index" width="1280" height="719" loading="lazy" decoding="async" /></figure>
+        <h3 class="m3x-screen-name">Dragger-Puller</h3>
+        <p class="m3x-screen-text">See which Nifty 50 stocks are pulling the index up and which are dragging it down.</p>
+      </li>
+      <li class="m3x-screen" data-opai-animate data-delay="0.3">
+        <figure class="m3x-screen-shot"><img src="/images/banners/banner2.webp" alt="Alert Engine history log with re-entry and reversal alerts" width="1280" height="674" loading="lazy" decoding="async" /></figure>
+        <h3 class="m3x-screen-name">Alert Engine</h3>
+        <p class="m3x-screen-text">Every new alert, re-entry, reversal and exit for the session, each with its time.</p>
+      </li>
+      <li class="m3x-screen" data-opai-animate data-delay="0.4">
+        <figure class="m3x-screen-shot"><img src="/images/banners/banner3.webp" alt="Real-time Nifty 50 candlestick chart with alert annotations" width="1280" height="718" loading="lazy" decoding="async" /></figure>
+        <h3 class="m3x-screen-name">Interactive Candlestick Chart</h3>
+        <p class="m3x-screen-text">The live Nifty chart with each alert marked where it fired.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+      <!-- ============================= How signals work ============================= -->
+<section id="how-it-works" class="m3x-sec m3x-pt-0 bg-background-6 pt-20 pb-16 md:pt-27 md:pb-20 lg:pt-33 lg:pb-26 xl:pt-39 xl:pb-28">
+  <div class="main-container">
+    <div class="m3x-sec-head mb-13 space-y-1.5 text-center lg:mb-19 lg:space-y-3">
+      <h2
+        data-opai-text-reveal
+        data-word-delay="0.1"
+        data-word-rotation-x="120"
+        data-word-offset-y="50"
+        class="xl:text-sora-heading-2 lg:text-sora-heading-3 text-sora-heading-4 font-normal tracking-[-2.4px] text-white/90"
+      >
+        Many data streams. <span class="text-mint m3x-line">One confident call.</span>
+      </h2>
+      <p
+        data-opai-text-reveal
+        data-delay="0.2"
+        data-word-delay="0.01"
+        data-word-offset-y="42"
+        data-word-rotation-x="10"
+        class="text-tagline-2 font-inter-tight w-full font-normal text-white/60 md:mx-auto md:max-w-[490px]"
+      >
+        We weigh independent market signals and only send an alert when they line up in the same direction. Less noise, fewer false breakouts.
+      </p>
+    </div>
+
+    <!-- services -->
+    <div class="grid grid-cols-12 justify-items-center gap-y-10 md:gap-x-6">
+      <!-- service 01 -->
+      <article
+        data-opai-animate
+        data-delay="0.3"
+        class="bg-background-5 col-span-12 flex h-full max-h-[420px] min-h-[420px] w-full flex-col justify-between rounded-lg p-8 md:col-span-6 lg:col-span-3 lg:max-w-[298px]"
+      >
+        <span class="ns-shape-1 text-[60px] text-white"> </span>
+
+        <div>
+          <h3 class="text-sora-heading-5 font-normal tracking-[-0.72px] text-white/90">
+            Price &amp; <br class="hidden lg:block" />
+            volume action.
+          </h3>
+          <p class="m3x-card-text">Breakouts, trend strength, support and resistance, and volume spikes.</p>
+        </div>
+      </article>
+      <!-- service 02 -->
+      <article
+        data-opai-animate
+        data-delay="0.4"
+        class="bg-background-5 relative col-span-12 h-full max-h-[420px] min-h-[420px] w-full overflow-hidden rounded-lg p-8 md:col-span-6 lg:col-span-3 lg:max-w-[298px]"
+      >
+        <!-- gradient -->
+        <div
+          class="absolute -top-[53%] -right-[80%] z-10 h-[400px] w-[400px] lg:-top-[68%] xl:-top-[53%]"
+        >
+          <img src="/images/gradient/opai-10-green.webp" alt="" class="size-full object-cover" loading="lazy" decoding="async" />
+        </div>
+
+        <!-- progressive blur  -->
+        <div
+          data-progressive-blur-effect
+          data-intensity="700"
+          data-position="bottom"
+          class="h-[180px] md:h-[220px]"
+          aria-hidden="true"
+        ></div>
+
+        <div class="relative z-10 flex size-full flex-col justify-between">
+          <span class="ns-shape-2 text-[60px] text-white"> </span>
+          <div>
+            <h3 class="text-sora-heading-5 font-normal tracking-[-0.72px] text-white/90">
+              Open interest <br class="hidden lg:block" /> &amp; PCR.
+            </h3>
+            <p class="m3x-card-text">Call and put OI build-up, PCR shifts and key option chain levels.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- service 03 -->
+      <article
+        data-opai-animate
+        data-delay="0.5"
+        class="bg-background-5 col-span-12 flex h-full max-h-[420px] min-h-[420px] w-full flex-col justify-between rounded-lg p-8 md:col-span-6 lg:col-span-3 lg:max-w-[298px]"
+      >
+        <span class="ns-shape-3 text-[60px] text-white"> </span>
+
+        <div>
+          <h3 class="text-sora-heading-5 font-normal tracking-[-0.72px] text-white/90">
+            News &amp; <br class="hidden lg:block" /> events.
+          </h3>
+          <p class="m3x-card-text">Company results, RBI policy and Indian economic data that move the market.</p>
+        </div>
+      </article>
+
+      <!-- service 04 -->
+      <article
+        data-opai-animate
+        data-delay="0.6"
+        class="bg-background-5 relative col-span-12 h-full max-h-[420px] min-h-[420px] w-full overflow-hidden rounded-lg p-8 md:col-span-6 lg:col-span-3 lg:max-w-[298px]"
+      >
+        <!-- progressive blur  -->
+        <div
+          data-progressive-blur-effect
+          data-intensity="600"
+          data-position="bottom"
+          class="h-[130px] md:h-[220px]"
+          aria-hidden="true"
+        ></div>
+
+        <div class="relative z-10 flex size-full flex-col justify-between">
+          <span class="ns-shape-4 text-[60px] text-white"> </span>
+          <div>
+            <h3 class="text-sora-heading-5 font-normal tracking-[-0.72px] text-white/90">
+              Market <br class="hidden lg:block" /> breadth.
+            </h3>
+            <p class="m3x-card-text">Advances and declines, sector moves and India VIX through every session.</p>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</section>
+
+      <!-- ============================= Closing CTA ============================= -->
+<%- include('../partials/cta-band') %>
+
+    </main>
+
+<%- include('../partials/footer') %>

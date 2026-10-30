@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <script src="/js/theme.js"></script>
+    <meta name="color-scheme" content="light dark" />
+<meta name="description" content="<%= description %>" />
+<meta
+  name="keywords"
+  content="Nifty alerts, option alerts, Bank Nifty alerts, trading alerts, Sensex alerts, stock alerts, Market360X"
+/>
+<meta name="author" content="Market360X" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="<%= ogTitle %>" />
+<meta property="og:description" content="<%= description %>" />
+<meta property="og:image:alt" content="Market360X - Accurate Trading Alerts for Nifty, Sensex and Options" />
+<meta property="og:site_name" content="Market360X" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="<%= ogTitle %>" />
+<meta property="twitter:description" content="<%= description %>" />
+
+<!-- Additional SEO Meta Tags -->
+<meta name="robots" content="<%= typeof robots !== 'undefined' && robots ? robots : 'index, follow' %>" />
+<meta name="googlebot" content="index, follow" />
+<meta name="theme-color" content="#f6f8fb" />
+<meta name="msapplication-TileColor" content="#000000" />
+<link rel="icon" type="image/png" href="/favicon-96x96.png?v=2" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+<link rel="shortcut icon" href="/favicon.ico?v=2" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2" />
+<link rel="manifest" href="/site.webmanifest?v=2" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- web fonts are self-hosted (@font-face in main.css); the ones every first screen uses are fetched straight away -->
+<link rel="preload" href="/fonts/gf/manrope-300-800-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/gf/inter-tight-300-600-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/gf/ibm-plex-mono-500-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/gf/ibm-plex-mono-600-latin.woff2" as="font" type="font/woff2" crossorigin />
+
+    <title><%= title %></title>
+    
+    <link rel="stylesheet" href="/assets/main.css">
+    <% (styles || []).forEach(function (href) { %><link rel="stylesheet" href="<%= href %>">
+    <% }) %>
+  </head>
+<body<% if (bodyClass) { %> class="<%= bodyClass %>"<% } %>>

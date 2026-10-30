@@ -1,0 +1,61 @@
+<%- include('_start') %>
+<%
+  const firstName = account.firstName;
+  const ms = sentimentData ? sentimentData.sentiment : null;
+  const tone = ms ? ms.label.toLowerCase() : 'neutral';
+%>
+          <header class="m3x-acct-head">
+            <p class="m3x-eyebrow">Dashboard</p>
+            <h1 class="m3x-acct-title">Welcome back, <%= firstName %></h1>
+            <p class="m3x-acct-lead">Here's a quick look at your account and today's Nifty market mood.</p>
+          </header>
+
+          <div class="m3x-stat-grid">
+            <a class="m3x-stat" href="/account/plan">
+              <span class="m3x-stat-icon"><%- icon('credit-card') %></span>
+              <span class="m3x-stat-label">Current plan</span>
+              <strong class="m3x-stat-value">No active plan</strong>
+              <span class="m3x-stat-foot is-link">Choose a plan <%- icon('arrow-right') %></span>
+            </a>
+
+            <a class="m3x-stat is-<%= tone %>" href="/#sentiment">
+              <span class="m3x-stat-icon"><%- icon('activity') %></span>
+              <span class="m3x-stat-label">Nifty 50 sentiment</span>
+              <% if (ms) { %>
+              <strong class="m3x-stat-value is-tone"><%= fmt.formatPercent(ms.percent) %> <small><%= ms.label %></small></strong>
+              <span class="m3x-stat-foot"><%- icon('clock') %>Updated <%= fmt.formatIstDateTime(sentimentData.updatedAt) %></span>
+              <% } else { %>
+              <strong class="m3x-stat-value">Unavailable</strong>
+              <span class="m3x-stat-foot">Try again in a moment</span>
+              <% } %>
+            </a>
+
+            <div class="m3x-stat">
+              <span class="m3x-stat-icon"><%- icon('calendar-days') %></span>
+              <span class="m3x-stat-label">Member since</span>
+              <strong class="m3x-stat-value"><%= formatDate(customer.createdAt) %></strong>
+              <span class="m3x-stat-foot"><%- icon('trending-up') %><%= experienceText(customer.experienceYears) %> in the market</span>
+            </div>
+          </div>
+
+          <div class="m3x-acct-cols">
+            <section class="m3x-panel" aria-labelledby="m3x-steps-title">
+              <h2 id="m3x-steps-title"><%- icon('sparkles') %>Get started</h2>
+              <ol class="m3x-steps">
+                <li class="is-done"><%- icon('circle-check') %><span><strong>Create your account</strong><small>Done. Welcome to Market360X.</small></span></li>
+                <li><%- icon('circle') %><span><strong>Pick a Nifty Option Alert plan</strong><small>Weekly, monthly or yearly. Longer plans save more.</small></span><a href="/account/plan">Choose</a></li>
+                <li><%- icon('circle') %><span><strong>Start receiving alerts</strong><small>Real-time Nifty option alerts, once your plan is active.</small></span></li>
+              </ol>
+            </section>
+
+            <section class="m3x-panel" aria-labelledby="m3x-links-title">
+              <h2 id="m3x-links-title"><%- icon('layout-dashboard') %>Quick links</h2>
+              <ul class="m3x-quick">
+                <li><a href="/#sentiment"><%- icon('activity') %><span>Live Nifty sentiment</span><%- icon('arrow-right') %></a></li>
+                <li><a href="/nifty-alert"><%- icon('bell-ring') %><span>Nifty Option Alert plans</span><%- icon('arrow-right') %></a></li>
+                <li><a href="/account/profile"><%- icon('user-round-pen') %><span>Edit your details</span><%- icon('arrow-right') %></a></li>
+                <li><a href="/account/profile#password"><%- icon('key-round') %><span>Change password</span><%- icon('arrow-right') %></a></li>
+              </ul>
+            </section>
+          </div>
+<%- include('_end') %>

@@ -1,0 +1,27 @@
+<%#
+  Top-of-header index strip (NIFTY, SENSEX, BANKNIFTY, FINNIFTY, BANKEX, MIDCPNIFTY).
+  Rendered from the server's cached quotes (local: ticker, may be null) and refreshed by /js/ticker.js.
+%>
+<%
+  const t = typeof ticker !== 'undefined' && ticker ? ticker : null;
+  const items = t ? t.indices : indexList.map(function (d) { return { id: d.id, label: d.label, price: null, direction: 'flat' }; });
+  const renderItems = function () {
+    return items.map(function (q) {
+      const priceText = q.price === null ? '—' : tickerFormat.price(q.price);
+      const changeText = q.price === null ? '' : tickerFormat.arrow(q.direction) + ' ' + tickerFormat.change(q.change, q.changePercent);
+      return '<li class="m3x-tick is-' + q.direction + '" data-tick="' + q.id + '"><span class="m3x-tick-name">' + q.label +
+        '</span><span class="m3x-tick-price">' + priceText + '</span><span class="m3x-tick-chg">' + changeText + '</span></li>';
+    }).join('');
+  };
+%>
+<div class="m3x-ticker" role="region" aria-label="Indian market indices" data-ticker>
+  <span class="m3x-ticker-status <%= t && t.marketOpen ? 'is-open' : 'is-closed' %>" data-ticker-status title="Index data from Yahoo Finance. May be delayed.">
+    <i aria-hidden="true"></i><span data-ticker-status-text><%= t ? (t.marketOpen ? 'Live' : 'Closed') : 'Markets' %></span>
+  </span>
+  <div class="m3x-ticker-viewport">
+    <div class="m3x-ticker-track" data-ticker-track>
+      <ul class="m3x-ticker-list" data-ticker-list><%- renderItems() %></ul>
+      <ul class="m3x-ticker-list" aria-hidden="true" data-ticker-list><%- renderItems() %></ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<%# Header profile menu (signed in) or "Log in" link (signed out). Local: account (from loadAccount, may be null). %>
+<% if (account) { %>
+<div class="m3x-acct" data-account-menu>
+  <button type="button" class="m3x-acct-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="m3x-acct-menu" data-account-toggle>
+    <span class="m3x-avatar" aria-hidden="true"><%= account.initials %></span>
+    <span class="m3x-acct-name"><%= account.firstName %></span>
+    <span class="sr-only">: open account menu</span>
+    <%- icon('chevron-down', 'm3x-acct-caret') %>
+  </button>
+  <div class="m3x-acct-menu" id="m3x-acct-menu" data-account-panel hidden>
+    <div class="m3x-acct-who">
+      <span class="m3x-avatar is-lg" aria-hidden="true"><%= account.initials %></span>
+      <span><strong><%= account.name %></strong><small><%= account.email %></small></span>
+    </div>
+    <ul>
+      <li><a href="/account/profile"><%- icon('circle-user-round') %>Profile</a></li>
+      <li><a href="/account"><%- icon('layout-dashboard') %>Dashboard</a></li>
+      <li><a href="/account/plan"><%- icon('credit-card') %>Plan</a></li>
+    </ul>
+    <form method="post" action="/account/logout">
+      <input type="hidden" name="_csrf" value="<%= account.csrfToken %>" />
+      <button type="submit"><%- icon('log-out') %>Log out</button>
+    </form>
+  </div>
+</div>
+<% } else { %>
+<a href="/account" class="m3x-acct-login" data-auth-open><%- icon('circle-user-round') %><span>Log in</span></a>
+<% } %>
