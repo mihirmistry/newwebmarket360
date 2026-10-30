@@ -1,17 +1,29 @@
 import { createApp } from "./app.js";
 import { loadConfig } from "./config.js";
+import { runMigrations } from "./db/migrate.js";
 import { createPool } from "./db/pool.js";
 import type { IndicatorService } from "./services/auto-indicators.js";
 
 const config = loadConfig();
 const pool = createPool(config.DATABASE_URL, config.DATABASE_SSL);
 
-// Fail fast with a clear message if the database is unreachable or not migrated.
+// Automatically apply pending database migrations on startup.
 try {
-  await pool.query("SELECT 1 FROM nifty_alerts LIMIT 1");
+  await runMigrations(pool);
 } catch (err) {
-  console.error(`Database check failed: ${(err as Error).message}\nIs DATABASE_URL correct, and have you run "npm run migrate"?`);
+  console.error(`Database migration failed: ${(err as Error).message}\nIs DATABASE_URL correct?`);
   process.exit(1);
+}
+
+// Automatically configure initial admin user if ADMIN_EMAIL and ADMIN_PASSWORD are provided.
+if (config.ADMIN_EMAIL && config.ADMIN_PASSWORD) {
+  try {
+    const { upsertAdmin } = await import("./services/admins.js");
+    await upsertAdmin(pool, config.ADMIN_EMAIL, config.ADMIN_PASSWORD);
+    console.log(`Admin account verified/ensured for ${config.ADMIN_EMAIL}`);
+  } catch (err) {
+    console.warn(`Admin auto-setup warning: ${(err as Error).message}`);
+  }
 }
 
 const app = createApp(config, pool);

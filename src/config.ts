@@ -2,13 +2,18 @@ import "dotenv/config";
 import { z } from "zod";
 
 const boolFromEnv = z
-  .enum(["true", "false", "1", "0"])
-  .optional()
+  .preprocess(
+    (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
+    z.enum(["true", "false", "1", "0"]).optional()
+  )
   .transform((v) => v === "true" || v === "1");
 
 const schema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
-  PORT: z.coerce.number().int().positive().default(3000),
+  PORT: z.preprocess(
+    (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
+    z.coerce.number().int().positive().default(3000)
+  ),
   DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
   DATABASE_SSL: boolFromEnv,
   SESSION_SECRET: z.string().min(32, "SESSION_SECRET must be at least 32 characters"),
@@ -26,7 +31,10 @@ const schema = z.object({
     .optional()
     .or(z.literal("").transform(() => undefined)),
   // The payee name customers' UPI apps show for the QR (defaults match the shipped QR image below).
-  PAYMENT_UPI_NAME: z.string().trim().min(1).max(60).default("Anand Singh"),
+  PAYMENT_UPI_NAME: z.preprocess(
+    (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
+    z.string().trim().min(1).max(60).default("Anand Singh")
+  ),
   // Defaults to the business QR in public/images/payment; "none" turns it off.
   PAYMENT_QR_IMAGE: z.preprocess(
     (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
@@ -40,11 +48,15 @@ const schema = z.object({
 
   // Email: new QR orders are sent to ADMIN_EMAIL. Without SMTP settings, orders are still saved (see /admin/orders).
   ADMIN_EMAIL: z.string().trim().email("ADMIN_EMAIL must be an email address").optional().or(z.literal("").transform(() => undefined)),
+  ADMIN_PASSWORD: z.string().trim().min(12, "ADMIN_PASSWORD must be at least 12 characters").optional().or(z.literal("").transform(() => undefined)),
   SMTP_HOST: z.string().trim().optional().or(z.literal("").transform(() => undefined)),
-  SMTP_PORT: z.coerce.number().int().positive().default(587),
+  SMTP_PORT: z.preprocess(
+    (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
+    z.coerce.number().int().positive().default(587)
+  ),
   SMTP_SECURE: boolFromEnv,
-  SMTP_USER: z.string().optional(),
-  SMTP_PASS: z.string().optional(),
+  SMTP_USER: z.string().optional().or(z.literal("").transform(() => undefined)),
+  SMTP_PASS: z.string().optional().or(z.literal("").transform(() => undefined)),
   MAIL_FROM: z.string().trim().optional().or(z.literal("").transform(() => undefined)),
 });
 
